@@ -100,11 +100,11 @@ def buscarISBN(isbn:str,lista_libros:list[Libro])->Libro:
 def Buscar_en_libros(cadena: str, libros: list, tipo_separador: str, tipo_key: str):
     cadena_list = cadena.split(tipo_separador)
     indice_libros = []
-
+    
     for palabra in cadena_list:
       srch_result = 0
       for indice,libro in enumerate(libros):
-        srch_result = libro.get_titulo().lower().find(palabra)
+        srch_result = getattr(libro, tipo_key).lower().find(palabra)
         if srch_result != -1:
           indice_libros.append(indice)
     indices_libros = set(indice_libros)   

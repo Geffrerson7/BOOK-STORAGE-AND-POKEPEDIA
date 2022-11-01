@@ -3,7 +3,7 @@ class Libro:
         self.__id = id
         self.__titulo = titulo
         self.__genero = genero
-        self.__ISBN = ISBN
+        self.ISBN = ISBN
         self.__editorial = editorial
         self.__autores = autores
     
