@@ -1,3 +1,15 @@
+import os
+
+def regresarmenu():
+    input("Presione una tecla para regresar ...")
+    
+def funcionlimpiar():
+#os.name (define el sistema operativo), var es la palabra para limpiar pantalla 
+    if os.name == "posix":
+        var = "clear"       
+    elif os.name == "ce" or os.name == "nt" or os.name == "dos":
+        var = "cls"
+    os.system(var)
 
 def validarLeerStrings(mensaje:str)->str:
     """Recibe un mensaje para el input y valida que el dato ingresado no sea un str vacio"""

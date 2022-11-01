@@ -1,8 +1,9 @@
 from funciones_tarea1 import *
 from funciones_utilidades import *
 lista_libros = []
-
+funcionlimpiar()
 while True:
+    funcionlimpiar()
     print("***** BIBLIOTECA *******")
     creacionMenu(["Leer archivo de disco duro", "Listar libros", "Agregar libro",
                  "Eliminar libro", "Buscar libro por ISBN o por título", "Ordenar libros por título",
@@ -10,19 +11,24 @@ while True:
                   "Editar o actualizar datos de un libro", "Guardar libros en archivo","Salir"])
     opcion = validarRangoInt(1,11,"Ingrese la opción:")
     if opcion == 1:
-        lista_libros.extend(CargarArchivo())
-        id = 0
+        funcionlimpiar()
+        CargarArchivo(lista_libros)
+        regresarmenu()
+
     elif opcion == 3:
+        funcionlimpiar()
         print("******* AGREGRAR LIBRO ********")
         libro = crearLibro(lista_libros)
         lista_libros.append(libro)
         print("[*** Libro agregado ****]")
     elif opcion == 6:
+        funcionlimpiar()
         print("*** LIBROS ORDENADOS POR TÍTULO ****")
         titulos = ordenarLibrosPorTitulo(lista_libros)
         for i, titulo in enumerate(titulos, 1):
             print(i, titulo)
     elif opcion == 9:
+        funcionlimpiar()
         print("****** EDITAR LIBRO ******")
         isbn=validarLeerStrings(" -Ingrese ISBN del libro a editar: ")
         libroActualizar,index=buscarISBN(isbn,lista_libros)
@@ -40,5 +46,4 @@ while True:
 
     elif opcion == 11:
         break
-for item in lista_libros:
-    print(item.get_titulo())
+
