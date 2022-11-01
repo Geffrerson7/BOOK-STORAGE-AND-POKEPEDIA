@@ -1,24 +1,28 @@
 import csv
-import os
-os.system("cls")
+
+
 from libro import *
 from funciones_utilidades import *
 
-def CargarArchivo() -> list:
+def CargarArchivo(objetos_libros) -> list:
     try:
+        print("***** CARGAR EL ARCHIVO DE LIBROS *******")
         direccion = input("Escriba la dirección del archivo .txt o .csv: ")
         with open(direccion, "r", encoding = 'utf-8') as csv_file:
             csv_reader = csv.DictReader(csv_file)
 
-            objetos_libros=[]
+
             for row in csv_reader:
                 autores = row['AUTORES'].split(',')
-                libro = Libro(1, row['TITULO'], row['GENERO'], row['ISBN'], row['EDITORIAL'], autores)
+                id = crearId(len(objetos_libros))
+                libro = Libro(id, row['TITULO'], row['GENERO'], row['ISBN'], row['EDITORIAL'], autores)
                 objetos_libros.append(libro)
-            return objetos_libros
+            print("Archivo cargado")
+            
     except:
-        print("No existe el archivo")         
-def crearId(longitudLibros:list[Libro])->int:
+        print("No existe el archivo") 
+
+def crearId(longitudLibros:int)->int:
     return longitudLibros
 
 def crearLibro(lista_libros:list[Libro]) -> Libro:
