@@ -1,3 +1,4 @@
+from typing import List
 from typing_extensions import Self
 
 
@@ -10,18 +11,18 @@ class Libro:
         self.__editorial = editorial
         self.__autores = autores
     
-    
-    def get_ISBN(self):
+
+    def get_ISBN(self)->str:
         return self.__ISBN
-    def set_ISBN(self, ISBN):
+    def set_ISBN(self, ISBN)->None:
         self.__ISBN = ISBN
 
-    def get_editorial(self):
+    def get_editorial(self)->str:
         return self.__editorial
-    def set_editorial(self, editorial):
+    def set_editorial(self, editorial)->None:
         self.__editorial = editorial
     
-    def get_autores(self):
+    def get_autores(self)->List:
         return self.__autores
-    def set_autores(self, autores):
+    def set_autores(self, autores)->None:
         self.__autores = autores
