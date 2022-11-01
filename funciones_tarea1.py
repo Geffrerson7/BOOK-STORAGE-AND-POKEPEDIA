@@ -108,7 +108,10 @@ def Buscar_en_libros(cadena: str, libros: list, tipo_separador: str, tipo_key: s
     for palabra in cadena_list:
       srch_result = 0
       for indice,libro in enumerate(libros):
-        srch_result = getattr(libro, tipo_key).lower().find(palabra)
+        if tipo_key == 'titulo':
+          srch_result = libro.get_titulo().lower().find(palabra)
+        else:
+          srch_result = libro.get_ISBN().lower().find(palabra)
         if srch_result != -1:
           indice_libros.append(indice)
     indices_libros = set(indice_libros)   

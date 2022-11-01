@@ -14,6 +14,13 @@ while True:
         funcionlimpiar()
         CargarArchivo(lista_libros)
         regresarmenu()
+        lista_libros.extend(CargarArchivo())
+        id = 0
+    elif opcion == 2:
+        funcionlimpiar()
+        print("******* LISTAR LIBRO ********")
+        listar(lista_libros)
+        regresarmenu()
 
     elif opcion == 3:
         funcionlimpiar()
