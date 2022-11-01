@@ -16,6 +16,14 @@ def validarLeerInt(mensaje:str)->int:
             return variableLeer
         print("[El valor a ingresar debe ser un NÚMERO]")
 
+def validarRangoInt(inicio:int,final:int,mensaje:str)->int:
+    """Valida que una opcion ingresada este en el rango indicado y valida que sea un entero"""
+    while True:
+        variable=validarLeerInt(mensaje)
+        if variable>=inicio and variable<=final:
+            return variable
+        print("[El número ingresado no está en el rango indicado]")  
+
 def leerArrayStrings(mensaje:str,longitud:int)->list[str]:
     """Recibe un mensaje para el input y la longitud del array a recorrer, solo es para valores de tipo str"""
     lista=[]
@@ -23,3 +31,7 @@ def leerArrayStrings(mensaje:str,longitud:int)->list[str]:
         variable=validarLeerStrings(mensaje+str(i)+":")
         lista.append(variable)
     return lista
+
+def creacionMenu(opciones:list[str])->None:
+    for i,opcion in enumerate(opciones,start=1):
+        print(str(i)+") "+opcion)
