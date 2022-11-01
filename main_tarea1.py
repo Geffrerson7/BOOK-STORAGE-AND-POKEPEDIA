@@ -21,6 +21,10 @@ while True:
         libro = crearLibro(lista_libros)
         lista_libros.append(libro)
         print("[*** Libro agregado ****]")
+
+    elif opcion == 5:
+        print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
+        Buscar_libro_por_ISBN_o_título(lista_libros)
     elif opcion == 6:
         funcionlimpiar()
         print("*** LIBROS ORDENADOS POR TÍTULO ****")

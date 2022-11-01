@@ -1,6 +1,9 @@
 import csv
+import os
+import re
+from tabulate import tabulate
 
-
+os.system("cls")
 from libro import *
 from funciones_utilidades import *
 
@@ -97,3 +100,41 @@ def buscarISBN(isbn:str,lista_libros:list[Libro])->Libro:
         if(libro.get_ISBN()==isbn):
             return libro,lista_libros.index(libro)
     return None,-1
+
+def Buscar_en_libros(cadena: str, libros: list, tipo_separador: str, tipo_key: str):
+    cadena_list = cadena.split(tipo_separador)
+    indice_libros = []
+    
+    for palabra in cadena_list:
+      srch_result = 0
+      for indice,libro in enumerate(libros):
+        srch_result = getattr(libro, tipo_key).lower().find(palabra)
+        if srch_result != -1:
+          indice_libros.append(indice)
+    indices_libros = set(indice_libros)   
+    
+    result = []
+    for indice in indices_libros:
+      result.append(libros[indice])
+    return result
+
+
+def Buscar_libro_por_ISBN_o_título(data):
+    variable_a_buscar = input("¿Desea buscar por título o por ISBN?")
+    #ISBN = re.search("^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", input_user)
+
+    if variable_a_buscar == 'ISBN':
+       print(Buscar_en_libros(variable_a_buscar, data, '-','ISBN'))
+    else:
+      print(Buscar_en_libros(variable_a_buscar, data, ' ','titulo'))
+
+
+def listar(libros_data):
+    # create header
+    head = ["Título", "Género", "ISBN", "Editorial", "Autores"]
+    data = []
+    for libro in libros_data:
+      data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), str(libro.get_autores())])
+
+    # # display table
+    print(tabulate(data, headers=head, tablefmt="grid"))
