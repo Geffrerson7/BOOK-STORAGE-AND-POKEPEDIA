@@ -12,11 +12,19 @@ while True:
     if opcion == 1:
         lista_libros.extend(CargarArchivo())
         id = 0
+    elif opcion == 2:
+        print("******* LISTAR LIBRO ********")
+        listar(lista_libros)
+
     elif opcion == 3:
         print("******* AGREGRAR LIBRO ********")
         libro = crearLibro(lista_libros)
         lista_libros.append(libro)
         print("[*** Libro agregado ****]")
+
+    elif opcion == 5:
+        print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
+        Buscar_libro_por_ISBN_o_título(lista_libros)
     elif opcion == 6:
         print("*** LIBROS ORDENADOS POR TÍTULO ****")
         titulos = ordenarLibrosPorTitulo(lista_libros)
