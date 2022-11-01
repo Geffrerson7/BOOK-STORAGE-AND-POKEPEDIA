@@ -18,3 +18,18 @@ def CargarArchivo() -> list:
             return objetos_libros
     except:
         print("No existe el archivo")         
+def crearId(longitudLibros:list[Libro])->int:
+    return longitudLibros
+
+def agregarLibro(lastId: int, titulo: str, genero: str, isbn: str, editorial: str, autores: list[str]) -> Libro:
+    libroCreado = Libro(lastId, titulo, genero, isbn, editorial, autores)
+    return libroCreado
+
+def ordenarLibrosPorTitulo(libros:list[Libro])->list[str]:
+    titulosOrdenados=[]
+    for libro in libros:
+        titulosOrdenados.append(libro.get_titulo())
+    return sorted(titulosOrdenados)
+
+def actualizarLibro():
+    pass
