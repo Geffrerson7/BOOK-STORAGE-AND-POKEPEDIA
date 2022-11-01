@@ -1,6 +1,3 @@
-from typing_extensions import Self
-
-
 class Libro:
     def __init__(self, id, titulo, genero, ISBN, editorial, autores):
         self.__id = id
