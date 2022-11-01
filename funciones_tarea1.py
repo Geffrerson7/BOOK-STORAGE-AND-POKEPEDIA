@@ -5,6 +5,7 @@ from libro import *
 
 
 def CargarArchivo() -> list:
+    try:
         direccion = input("Escriba la dirección del archivo .txt o .csv: ")
         with open(direccion, "r", encoding = 'utf-8') as csv_file:
             csv_reader = csv.DictReader(csv_file)
@@ -15,6 +16,5 @@ def CargarArchivo() -> list:
                 libro = Libro(1, row['TITULO'], row['GENERO'], row['ISBN'], row['EDITORIAL'], autores)
                 objetos_libros.append(libro)
             return objetos_libros
-                # libro_2 = Libro(2, row[1]['TITULO'], row[1]['GENERO'], row[1]['ISBN'], row[1]['EDITORIAL'], row[1]['AUTORES'] )
-                # libro_3 = Libro(3, row[2]['TITULO'], row[2]['GENERO'], row[2]['ISBN'], row[2]['EDITORIAL'], row[2]['AUTORES'] )
-
+    except:
+        print("No existe el archivo")         

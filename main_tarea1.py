@@ -11,4 +11,4 @@ while True:
     if opcion == 3:
         break
 for item in lista_libros:
-    print(item)
+    print(item.get_autores())
