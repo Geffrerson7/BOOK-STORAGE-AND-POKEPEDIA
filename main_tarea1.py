@@ -21,6 +21,12 @@ while True:
         libro = crearLibro(lista_libros)
         lista_libros.append(libro)
         print("[*** Libro agregado ****]")
+    elif opcion == 4:
+        funcionlimpiar()
+        print("******* ELIMINAR LIBRO ********")
+        isbn = validarLeerStrings("Ingrese el código ISBN del libro a eliminar: ")
+        eliminarLibro(isbn, lista_libros)
+        regresarmenu() 
     elif opcion == 6:
         funcionlimpiar()
         print("*** LIBROS ORDENADOS POR TÍTULO ****")

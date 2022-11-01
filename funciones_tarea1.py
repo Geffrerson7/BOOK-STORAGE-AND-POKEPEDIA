@@ -97,3 +97,10 @@ def buscarISBN(isbn:str,lista_libros:list[Libro])->Libro:
         if(libro.get_ISBN()==isbn):
             return libro,lista_libros.index(libro)
     return None,-1
+
+def eliminarLibro(isbn:str, lista_libros:list[Libro]) -> None:
+    for libro in lista_libros:
+        if libro.get_ISBN() == isbn:
+            lista_libros.pop(lista_libros.index(libro))
+    print("El libro ha sido eliminado")
+
