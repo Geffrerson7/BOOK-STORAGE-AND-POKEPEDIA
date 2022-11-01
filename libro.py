@@ -9,4 +9,19 @@ class Libro:
         self.__ISBN = ISBN
         self.__editorial = editorial
         self.__autores = autores
-        
+    
+    
+    def get_ISBN(self):
+        return self.__ISBN
+    def set_ISBN(self, ISBN):
+        self.__ISBN = ISBN
+
+    def get_editorial(self):
+        return self.__editorial
+    def set_editorial(self, editorial):
+        self.__editorial = editorial
+    
+    def get_autores(self):
+        return self.__autores
+    def set_autores(self, autores):
+        self.__autores = autores
