@@ -1,5 +1,5 @@
 class Libro:
-    def __init__(self, id, titulo, genero, ISBN, editorial, autores):
+    def __init__(self, id : int , titulo : str, genero : str, ISBN : str , editorial: str, autores: list[str]) -> None:
         self.__id = id
         self.__titulo = titulo
         self.__genero = genero
