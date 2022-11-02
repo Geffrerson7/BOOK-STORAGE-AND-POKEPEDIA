@@ -133,17 +133,11 @@ def Buscar_en_libros(cadena: str, libros: list, tipo_separador: str, tipo_key: s
       srch_result = 0
       for indice,libro in enumerate(libros):
         if tipo_key == 'titulo':
-          srch_result = libro.get_titulo().lower().find(palabra)
-        elif tipo_key == 'autores':
-            srch_result = libro.get_autores().lower().find(palabra)
-        elif tipo_key == 'editorial':
-            srch_result = libro.get_editorial().lower().find(palabra)
-        elif tipo_key == 'genero':
-            srch_result = libro.get_genero().lower().find(palabra)
+            srch_result = libro.get_titulo().lower().find(palabra)
         else:
-          srch_result = libro.get_ISBN().lower().find(palabra)
+            srch_result = libro.get_ISBN().lower().find(palabra)
         if srch_result != -1:
-          indice_libros.append(indice)
+            indice_libros.append(indice)
     indices_libros = set(indice_libros)   
     
     result = []
@@ -179,29 +173,63 @@ def eliminarLibro(isbn:str, lista_libros:list[Libro]) -> None:
             lista_libros.pop(lista_libros.index(libro))
     print("El libro ha sido eliminado")
 
-def Buscar_libro_por_autor_editorial_o_título(data):
-    variable_a_buscar = input("¿Desea buscar por autor, editorial o por genero?")
-    #ISBN = re.search("^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", input_user)
-
-    if variable_a_buscar == 'autor':
-       print(Buscar_en_libros(variable_a_buscar, data, '','autores'))
-    elif variable_a_buscar == 'editorial':
-        print(Buscar_en_libros(variable_a_buscar, data, '','editorial'))
+def Buscar_libro_por_autor_editorial_o_título(lista_libros):
+    creacionMenu(["Autor", "Editorial", "Genero", "Salir al Menú"])
+    op=validarRangoInt(1,4,"Ingrese la opción ed búsqueda: ")
+   
+    if op == 1:
+        variable_a_buscar = "autor"
+        autor_a_buscar = validarLeerStrings("Ingrese el nombre del autor: ")
+        libros_encontrados = Buscar_en_libros_2(variable_a_buscar, lista_libros, autor_a_buscar)
+        listar(libros_encontrados)
+    elif op == 2:
+        variable_a_buscar = "editorial"
+        editorial_a_buscar = validarLeerStrings("Ingrese el nombre de la editorial: ")
+        libros_encontrados = Buscar_en_libros_2(variable_a_buscar, lista_libros, editorial_a_buscar)
+        listar(libros_encontrados)
+    elif op == 3:
+        variable_a_buscar = "genero"
+        genero_a_buscar = validarLeerStrings("Ingrese el nombre del genero: ")
+        libros_encontrados = Buscar_en_libros_2(variable_a_buscar, lista_libros, genero_a_buscar)
+        listar(libros_encontrados)
     else:
-      print(Buscar_en_libros(variable_a_buscar, data, '','genero'))
-
+        print("Adiós")
+    
 def guardarlibros(Lista : list) -> None:
-    formato = input("¿Desea guardar la lista de libros en un .txt o .csv? ")
+    formato = validarLeerStrings("¿Desea guardar la lista de libros en un .txt o .csv? ")
     if formato == '.txt':
         with open(".\lista_de_libros.txt", "w", newline="") as txt_file:
             txt_writer=csv.writer(txt_file, delimiter=",")
             for linea in Lista:
                 txt_writer.writerow(linea)
-    print("La lista de archivos se guardó en lista_libros.txt")
+        print("La lista de archivos se guardó en lista_libros.txt")
 
-    if formato == '.csv':
+    elif formato == '.csv':
         with open("lista_de_libros.csv", "w", newline="") as csv_file:
             csv_writer=csv.writer(csv_file, delimiter=",")
             for linea in Lista:
                 csv_writer.writerow(linea)
         print("La lista de archivos se guardó en lista_libros.csv")
+    else:
+        print("El tipo de archivo ingresado no es el correcto")
+
+def Buscar_en_libros_2(atributoBuscar: str, libros: list[Libro], palabraBuscar: str):
+    resultados = []
+    for libro in libros:
+        srch_result = -1
+        if atributoBuscar == 'autor':
+            autores = libro.get_autores()
+            if palabraBuscar in autores:
+                srch_result = 0
+            
+        if atributoBuscar == 'editorial':
+            editorial = libro.get_editorial()
+            srch_result = editorial.find(palabraBuscar)
+            
+        if atributoBuscar == 'genero':
+            genero = libro.get_genero()
+            srch_result = genero.find(palabraBuscar)
+           
+        if srch_result != -1:
+            resultados.append(libro)
+    return resultados
