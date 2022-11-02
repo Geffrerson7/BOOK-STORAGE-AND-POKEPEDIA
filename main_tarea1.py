@@ -40,6 +40,10 @@ while True:
         print("*** LIBROS ORDENADOS POR TÍTULO ****")
         ordenarLibrosPorTitulo(lista_libros)
         regresarmenu()
+    elif opcion == 7:
+        print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
+        Buscar_libro_por_autor_editorial_o_título(lista_libros)
+        regresarmenu()
     elif opcion == 9:
         funcionlimpiar()
         print("****** EDITAR LIBRO ******")
@@ -57,6 +61,11 @@ while True:
                 lista_libros[index]=libro       
         else:
             print("[El ISBN ingresado no está registrado en el sistema]")
+        regresarmenu()
+    elif opcion == 10:
+        funcionlimpiar()
+        print("****** GUARDAR LIBROS EN EL DISCO DURO ******")
+        guardarlibros(lista_libros)
         regresarmenu()
     elif opcion == 11:
         break
