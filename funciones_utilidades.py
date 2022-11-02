@@ -51,4 +51,8 @@ def creacionMenu(opciones:list[str])->None:
         print(str(i)+") "+opcion)
 def ValidarISBN(ISBN: str):
     result=re.search("^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", ISBN)
-    return result
+    try:
+       return result
+    except:
+      return 
+   

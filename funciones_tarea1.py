@@ -119,47 +119,50 @@ def modificarAutor(libro:Libro)->list[str]:
             mensaje="[ERROR: El autor ingresado no existe]"
     return autores,mensaje
 
-def buscarISBN(isbn:str,lista_libros:list[Libro])->Libro:
+def buscarISBN(isbn:str,lista_libros:list[Libro])->list[Libro]:
+    result = []
     for libro in lista_libros:
         if(libro.get_ISBN()==isbn):
-            return libro,lista_libros.index(libro)
-    return None,-1
-
-def Buscar_en_libros(cadena: str, libros: list, tipo_separador: str, tipo_key: str):
-    cadena_list = cadena.split(tipo_separador)
-    indice_libros = []
-    
-    for palabra in cadena_list:
-      srch_result = 0
-      for indice,libro in enumerate(libros):
-        if tipo_key == 'titulo':
-            srch_result = libro.get_titulo().lower().find(palabra)
-        else:
-            srch_result = libro.get_ISBN().lower().find(palabra)
-        if srch_result != -1:
-            indice_libros.append(indice)
-    indices_libros = set(indice_libros)   
-    
-    result = []
-    for indice in indices_libros:
-      result.append(libros[indice])
-
-    if(len(result)):
-        print("No se ha encontrado el libro")
+            result.append(libro)
+    if len(result) == 0:
+        return 0
     else:
-        listar(result)
+        return result
+
+def Buscar_titulo(titulo:str,lista_libros:list[Libro])->list[Libro]:
+    result = []
+    for libro in lista_libros:
+        if(libro.get_titulo()==titulo):
+            result.append(libro)
+    if len(result) == 0:
+        return 0
+    else:
+        return result
 
 def Buscar_libro_por_ISBN_o_título(data):
-    variable_a_buscar = input("¿Desea buscar por título o por ISBN?")
-    if variable_a_buscar == 'ISBN':
-       ISBN = input("Ingrese el ISBN")
-       if ValidarISBN(ISBN) == -1:
-            print("ISBN invalido")
-       else:
-        Buscar_en_libros(ISBN, data, '-','ISBN')
-    else:
-      Buscar_en_libros(variable_a_buscar, data, ' ','titulo')
+    creacionMenu(["ISBN", "Titulo"])
+    op=validarRangoInt(1,2,"Ingrese la opción de búsqueda: ")
 
+    if op == 1:
+       ISBN = input("Ingrese el ISBN: ")
+       if ValidarISBN(ISBN) == None:
+            print("ISBN inválido")
+       else:
+         result_search = buscarISBN(ISBN, data)
+         if result_search == 0:
+            print("No se encontro ningun libro con ese ISBN")
+         else:
+            listar(result_search)
+
+    elif op == 2:
+      titulo = input("Ingrese el titulo: ")
+      result_search = Buscar_titulo(titulo, data)
+      if result_search == 0:
+        print("No se encontro ningun libro con ese titulo")
+      else:
+        listar(result_search)
+    else:
+        print("Opción inválida")
 
 
 def listar(libros_data):
@@ -168,7 +171,7 @@ def listar(libros_data):
     data = []
     for libro in libros_data:
         autores="\n".join(libro.get_autores())
-        data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), autores])
+        data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(),autores])
 
     # # display table
     print(tabulate(data, headers=head, tablefmt="grid"))
