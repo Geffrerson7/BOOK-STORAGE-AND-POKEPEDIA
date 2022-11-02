@@ -14,6 +14,13 @@ while True:
         funcionlimpiar()
         CargarArchivo(lista_libros)
         regresarmenu()
+        lista_libros.extend(CargarArchivo())
+        id = 0
+    elif opcion == 2:
+        funcionlimpiar()
+        print("******* LISTAR LIBRO ********")
+        listar(lista_libros)
+        regresarmenu()
 
     elif opcion == 3:
         funcionlimpiar()
@@ -21,12 +28,10 @@ while True:
         libro = crearLibro(lista_libros)
         lista_libros.append(libro)
         print("[*** Libro agregado ****]")
-    elif opcion == 4:
-        funcionlimpiar()
-        print("******* ELIMINAR LIBRO ********")
-        isbn = validarLeerStrings("Ingrese el código ISBN del libro a eliminar: ")
-        eliminarLibro(isbn, lista_libros)
-        regresarmenu() 
+
+    elif opcion == 5:
+        print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
+        Buscar_libro_por_ISBN_o_título(lista_libros)
     elif opcion == 6:
         funcionlimpiar()
         print("*** LIBROS ORDENADOS POR TÍTULO ****")
