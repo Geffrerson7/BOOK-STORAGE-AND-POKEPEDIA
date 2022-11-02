@@ -14,23 +14,21 @@ while True:
         funcionlimpiar()
         CargarArchivo(lista_libros)
         regresarmenu()
-        lista_libros.extend(CargarArchivo())
-        id = 0
     elif opcion == 2:
         funcionlimpiar()
         print("******* LISTAR LIBRO ********")
         listar(lista_libros)
         regresarmenu()
-
     elif opcion == 3:
         funcionlimpiar()
         print("******* AGREGRAR LIBRO ********")
         libro = crearLibro(lista_libros)
         lista_libros.append(libro)
         print("[*** Libro agregado ****]")
+        regresarmenu()
     elif opcion == 4:
         funcionlimpiar()
-        print("******* AGREGRAR LIBRO ********")
+        print("******* ELIMINAR LIBRO ********")
         isbn=validarLeerStrings(" -Ingrese ISBN del libro a eliminar: ")
         eliminarLibro(isbn, lista_libros)
         regresarmenu()
@@ -40,9 +38,8 @@ while True:
     elif opcion == 6:
         funcionlimpiar()
         print("*** LIBROS ORDENADOS POR TÍTULO ****")
-        titulos = ordenarLibrosPorTitulo(lista_libros)
-        for i, titulo in enumerate(titulos, 1):
-            print(i, titulo)
+        ordenarLibrosPorTitulo(lista_libros)
+        regresarmenu()
     elif opcion == 9:
         funcionlimpiar()
         print("****** EDITAR LIBRO ******")
@@ -54,12 +51,12 @@ while True:
             op=validarRangoInt(1,3,"Ingrese una opción: ")
             if(op==1):
                 lista_libros[index]=crearLibro(lista_libros)
+                print("[*** Libro editado ****]")
             if(op==2):
                 libro=actualizarLibro(libroActualizar)
-                lista_libros[index]=libro
+                lista_libros[index]=libro       
         else:
             print("[El ISBN ingresado no está registrado en el sistema]")
-
+        regresarmenu()
     elif opcion == 11:
         break
-
