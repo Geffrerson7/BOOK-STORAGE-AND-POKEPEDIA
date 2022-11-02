@@ -14,20 +14,28 @@ while True:
         funcionlimpiar()
         CargarArchivo(lista_libros)
         regresarmenu()
+<<<<<<< HEAD
         
+=======
+>>>>>>> 0ff82c70c202f26757a203caec69898b76722a02
     elif opcion == 2:
         funcionlimpiar()
         print("******* LISTAR LIBRO ********")
         listar(lista_libros)
         regresarmenu()
-
     elif opcion == 3:
         funcionlimpiar()
         print("******* AGREGRAR LIBRO ********")
         libro = crearLibro(lista_libros)
         lista_libros.append(libro)
         print("[*** Libro agregado ****]")
-
+        regresarmenu()
+    elif opcion == 4:
+        funcionlimpiar()
+        print("******* ELIMINAR LIBRO ********")
+        isbn=validarLeerStrings(" -Ingrese ISBN del libro a eliminar: ")
+        eliminarLibro(isbn, lista_libros)
+        regresarmenu()
     elif opcion == 5:
         funcionlimpiar()
         print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
@@ -37,9 +45,12 @@ while True:
     elif opcion == 6:
         funcionlimpiar()
         print("*** LIBROS ORDENADOS POR TÍTULO ****")
-        titulos = ordenarLibrosPorTitulo(lista_libros)
-        for i, titulo in enumerate(titulos, 1):
-            print(i, titulo)
+        ordenarLibrosPorTitulo(lista_libros)
+        regresarmenu()
+    elif opcion == 7:
+        print("******* BUSCAR LIBRO POR AUTOR, EDITORIAL O GENERO ********")
+        Buscar_libro_por_autor_editorial_o_título(lista_libros)
+        regresarmenu()
     elif opcion == 9:
         funcionlimpiar()
         print("****** EDITAR LIBRO ******")
@@ -51,12 +62,17 @@ while True:
             op=validarRangoInt(1,3,"Ingrese una opción: ")
             if(op==1):
                 lista_libros[index]=crearLibro(lista_libros)
+                print("[*** Libro editado ****]")
             if(op==2):
                 libro=actualizarLibro(libroActualizar)
-                lista_libros[index]=libro
+                lista_libros[index]=libro       
         else:
             print("[El ISBN ingresado no está registrado en el sistema]")
-
+        regresarmenu()
+    elif opcion == 10:
+        funcionlimpiar()
+        print("****** GUARDAR LIBROS EN EL DISCO DURO ******")
+        guardarlibros(lista_libros)
+        regresarmenu()
     elif opcion == 11:
         break
-
