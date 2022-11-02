@@ -28,7 +28,7 @@ while True:
         regresarmenu()
     elif opcion == 4:
         funcionlimpiar()
-        print("******* AGREGRAR LIBRO ********")
+        print("******* ELIMINAR LIBRO ********")
         isbn=validarLeerStrings(" -Ingrese ISBN del libro a eliminar: ")
         eliminarLibro(isbn, lista_libros)
         regresarmenu()
