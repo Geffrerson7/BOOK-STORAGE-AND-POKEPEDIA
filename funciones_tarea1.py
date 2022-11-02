@@ -33,12 +33,27 @@ def crearLibro(lista_libros:list[Libro]) -> Libro:
     print("Ingrese datos del libro:")
     titulo = validarLeerStrings(" -Título:")
     genero = validarLeerStrings(" -Género: ")
-    isbn = validarLeerStrings(" -ISBN: ")
+    isbn = validarISBN()
     editorial = validarLeerStrings(" -Editorial: ")
-    nroAutores = validarLeerInt(" -Nro de autores:")
+    nroAutores = validarNroAutores()
     autores = leerArrayStrings("  ->Autor ", nroAutores)
     libroCreado = Libro(lastId, titulo, genero, isbn, editorial, autores)
     return libroCreado
+
+def validarNroAutores()->int:
+    while True:
+        nroAutores = validarLeerInt(" -Nro de autores:")
+        if(nroAutores>0):
+            return nroAutores
+        print("[Se debe ingresar al menos 1 autor para el libro]")
+
+def validarISBN()->str:
+    while True:
+        isbn = validarLeerStrings(" -ISBN: ")
+        aux=isbn.replace("-","")
+        if(len(aux)>=10 and len(aux)<=13):
+            return isbn
+        print("[El ISBN debe estar entre 10 o 13 digitos numéricos (Ejemplo: 789-46-4268-197-5 o 7894642681975)]")
 
 def ordenarLibrosPorTitulo(libros:list[Libro])->list[str]:
     titulosOrdenados=[libro.get_titulo() for libro in libros]

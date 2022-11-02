@@ -45,5 +45,6 @@ def leerArrayStrings(mensaje:str,longitud:int)->list[str]:
     return lista
 
 def creacionMenu(opciones:list[str])->None:
+    """Crea un menú de opciones a partir de una lista"""
     for i,opcion in enumerate(opciones,start=1):
         print(str(i)+") "+opcion)
