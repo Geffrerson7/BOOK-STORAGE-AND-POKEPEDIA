@@ -92,28 +92,29 @@ def actualizarLibro(libro:Libro)->Libro:
 
 def modificarAutor(libro:Libro)->list[str]:
     print("**** Autores ****")
-    autores=libro.get_autores()
+    autores=[lib.lower() for lib in libro.get_autores()]
     creacionMenu(["Agregar autor","Eliminar autor","Modificar autor existente"])
     op=validarRangoInt(1,3,"Ingrese una opción: ")
     mensaje="[*** Libro actualizado ****]"
     if(op==1):
-        autor=validarLeerStrings(" ->Nuevo autor:")
+        autor=validarLeerStrings(" ->Nuevo autor:").lower()
         autores.append(autor)
     elif(op==2):
         if(len(libro.get_autores())==1):
             mensaje="[ERROR: El libro debe tener al menos 1 autor]"
         else:
-            autor=validarLeerStrings(" ->Nombre de autor a eliminar:")
+            autor=validarLeerStrings(" ->Nombre de autor a eliminar:").lower()
             if(autor in autores):
                 index=autores.index(autor)
                 autores.pop(index)
             else:
                 mensaje="[ERROR: El autor ingresado no existe]"
     elif(op==3):
-        autor=validarLeerStrings(" ->Nombre de autor a modificar:")
+        autor=validarLeerStrings(" ->Nombre del autor que desea modificar:").lower()
         if(autor in autores):
+            new_autor=validarLeerStrings(" ->Nuevo nombre:")
             index=autores.index(autor)
-            autores[index]=autor
+            autores[index]=new_autor
         else:
             mensaje="[ERROR: El autor ingresado no existe]"
     return autores,mensaje
