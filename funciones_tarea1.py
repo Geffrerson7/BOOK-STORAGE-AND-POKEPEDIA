@@ -1,6 +1,6 @@
 import csv
 import os
-import re
+
 from tabulate import tabulate
 
 os.system("cls")
@@ -143,18 +143,23 @@ def Buscar_en_libros(cadena: str, libros: list, tipo_separador: str, tipo_key: s
     result = []
     for indice in indices_libros:
       result.append(libros[indice])
-    return result
 
+    if(len(result)):
+        print("No se ha encontrado el libro")
+    else:
+        listar(result)
 
 def Buscar_libro_por_ISBN_o_título(data):
     variable_a_buscar = input("¿Desea buscar por título o por ISBN?")
-    #ISBN = re.search("^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", input_user)
-
     if variable_a_buscar == 'ISBN':
-       oracion = input("Ingrese el ISBN")
-       print(Buscar_en_libros(oracion, data, '-','ISBN'))
+       ISBN = input("Ingrese el ISBN")
+       if ValidarISBN(ISBN) == -1:
+            print("ISBN invalido")
+       else:
+        Buscar_en_libros(ISBN, data, '-','ISBN')
     else:
-      print(Buscar_en_libros(variable_a_buscar, data, ' ','titulo'))
+      Buscar_en_libros(variable_a_buscar, data, ' ','titulo')
+
 
 
 def listar(libros_data):
@@ -176,7 +181,7 @@ def eliminarLibro(isbn:str, lista_libros:list[Libro]) -> None:
 
 def Buscar_libro_por_autor_editorial_o_título(lista_libros):
     creacionMenu(["Autor", "Editorial", "Genero", "Salir al Menú"])
-    op=validarRangoInt(1,4,"Ingrese la opción ed búsqueda: ")
+    op=validarRangoInt(1,4,"Ingrese la opción de búsqueda: ")
    
     if op == 1:
         variable_a_buscar = "autor"
@@ -234,3 +239,12 @@ def Buscar_en_libros_2(atributoBuscar: str, libros: list[Libro], palabraBuscar: 
         if srch_result != -1:
             resultados.append(libro)
     return resultados
+
+def Buscar_por_numero_autores(libros: list[Libro]):
+    num_autores_user = int(input("Ingrese el número de autores: "))
+    result_search = []
+    for libro in libros:
+        num_autores_libro = len(libro.get_autores())
+        if(num_autores_libro == num_autores_user):
+            result_search.append(libro)
+    listar(result_search)

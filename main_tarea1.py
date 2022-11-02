@@ -14,10 +14,6 @@ while True:
         funcionlimpiar()
         CargarArchivo(lista_libros)
         regresarmenu()
-<<<<<<< HEAD
-        
-=======
->>>>>>> 0ff82c70c202f26757a203caec69898b76722a02
     elif opcion == 2:
         funcionlimpiar()
         print("******* LISTAR LIBRO ********")
@@ -50,6 +46,10 @@ while True:
     elif opcion == 7:
         print("******* BUSCAR LIBRO POR AUTOR, EDITORIAL O GENERO ********")
         Buscar_libro_por_autor_editorial_o_título(lista_libros)
+        regresarmenu()
+    elif opcion == 8:
+        print("******* BUSCAR LIBRO POR AUTOR, EDITORIAL O GENERO ********")
+        Buscar_por_numero_autores(lista_libros)
         regresarmenu()
     elif opcion == 9:
         funcionlimpiar()

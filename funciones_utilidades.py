@@ -1,4 +1,5 @@
 import os
+import re
 
 def regresarmenu():
     input("Presione una tecla para regresar ...")
@@ -48,3 +49,6 @@ def creacionMenu(opciones:list[str])->None:
     """Crea un menú de opciones a partir de una lista"""
     for i,opcion in enumerate(opciones,start=1):
         print(str(i)+") "+opcion)
+def ValidarISBN(ISBN: str):
+    result=re.search("^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", ISBN)
+    return result
