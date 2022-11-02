@@ -14,8 +14,7 @@ while True:
         funcionlimpiar()
         CargarArchivo(lista_libros)
         regresarmenu()
-        lista_libros.extend(CargarArchivo())
-        id = 0
+        
     elif opcion == 2:
         funcionlimpiar()
         print("******* LISTAR LIBRO ********")
@@ -30,8 +29,11 @@ while True:
         print("[*** Libro agregado ****]")
 
     elif opcion == 5:
+        funcionlimpiar()
         print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
         Buscar_libro_por_ISBN_o_título(lista_libros)
+        regresarmenu()
+
     elif opcion == 6:
         funcionlimpiar()
         print("*** LIBROS ORDENADOS POR TÍTULO ****")

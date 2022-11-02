@@ -127,7 +127,8 @@ def Buscar_libro_por_ISBN_o_título(data):
     #ISBN = re.search("^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", input_user)
 
     if variable_a_buscar == 'ISBN':
-       print(Buscar_en_libros(variable_a_buscar, data, '-','ISBN'))
+       oracion = input("Ingrese el ISBN")
+       print(Buscar_en_libros(oracion, data, '-','ISBN'))
     else:
       print(Buscar_en_libros(variable_a_buscar, data, ' ','titulo'))
 
