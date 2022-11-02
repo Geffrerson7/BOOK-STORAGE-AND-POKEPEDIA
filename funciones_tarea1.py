@@ -42,11 +42,17 @@ def crearLibro(lista_libros:list[Libro]) -> Libro:
 
 def ordenarLibrosPorTitulo(libros:list[Libro])->list[str]:
     titulosOrdenados=[libro.get_titulo() for libro in libros]
-    return sorted(titulosOrdenados)
+    head = ["Orden","Título"]
+    data = []
+    for i,titulo in enumerate(sorted(titulosOrdenados),start=1):
+      data.append([i,titulo])
+    # # display table
+    print(tabulate(data, headers=head, tablefmt="grid")) 
 
 def actualizarLibro(libro:Libro)->Libro:
     variablesActualizar=["titulo","título","género", "genero", "isbn", "editorial", "autores"]
     atributo=validarLeerStrings("¿Qué desea modificar [título,género,ISBN,editorial o autores]?: ").lower()
+    mensaje="[*** Libro actualizado ****]"
     while True:
         if(atributo in variablesActualizar):
             if(atributo==variablesActualizar[0] or atributo==variablesActualizar[1]):
@@ -62,38 +68,41 @@ def actualizarLibro(libro:Libro)->Libro:
                 editorial = validarLeerStrings(" -Nueva Editorial: ")
                 libro.set_editorial(editorial)
             elif(atributo==variablesActualizar[6]):
-                autores=modificarAutor(libro)
+                autores,mensaje=modificarAutor(libro)
                 libro.set_autores(autores)
+            print(mensaje)
             return libro
-        atributo=validarLeerStrings("¿Qué desea modificar [título,género,ISBN,editorial o autores]?: ").lower()
         print("[El valor ingresado no es una opción disponible]")
+        atributo=validarLeerStrings("¿Qué desea modificar [título,género,ISBN,editorial o autores]?: ").lower()
+        
 
 def modificarAutor(libro:Libro)->list[str]:
     print("**** Autores ****")
     autores=libro.get_autores()
     creacionMenu(["Agregar autor","Eliminar autor","Modificar autor existente"])
     op=validarRangoInt(1,3,"Ingrese una opción: ")
+    mensaje="[*** Libro actualizado ****]"
     if(op==1):
         autor=validarLeerStrings(" ->Nuevo autor:")
         autores.append(autor)
     elif(op==2):
         if(len(libro.get_autores())==1):
-            print("[ERROR: El libro debe tener al menos 1 autor]")
+            mensaje="[ERROR: El libro debe tener al menos 1 autor]"
         else:
             autor=validarLeerStrings(" ->Nombre de autor a eliminar:")
             if(autor in autores):
                 index=autores.index(autor)
                 autores.pop(index)
             else:
-                print("[ERROR: El autor ingresado no existe]")
+                mensaje="[ERROR: El autor ingresado no existe]"
     elif(op==3):
         autor=validarLeerStrings(" ->Nombre de autor a modificar:")
         if(autor in autores):
             index=autores.index(autor)
             autores[index]=autor
         else:
-            print("[ERROR: El autor ingresado no existe]")
-    return autores
+            mensaje="[ERROR: El autor ingresado no existe]"
+    return autores,mensaje
 
 def buscarISBN(isbn:str,lista_libros:list[Libro])->Libro:
     for libro in lista_libros:
@@ -137,7 +146,8 @@ def listar(libros_data):
     head = ["Título", "Género", "ISBN", "Editorial", "Autores"]
     data = []
     for libro in libros_data:
-      data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), str(libro.get_autores())])
+        autores="\n".join(libro.get_autores())
+        data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), autores])
 
     # # display table
     print(tabulate(data, headers=head, tablefmt="grid"))
