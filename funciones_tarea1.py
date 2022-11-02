@@ -9,7 +9,6 @@ from funciones_utilidades import *
 
 def CargarArchivo(objetos_libros) -> list:
     try:
-        print("***** CARGAR EL ARCHIVO DE LIBROS *******")
         direccion = input("Escriba la dirección del archivo .txt o .csv: ")
         with open(direccion, "r", encoding = 'utf-8') as csv_file:
             csv_reader = csv.DictReader(csv_file)
@@ -202,22 +201,32 @@ def Buscar_libro_por_autor_editorial_o_título(lista_libros):
         print("Adiós")
     
 def guardarlibros(Lista : list) -> None:
-    formato = validarLeerStrings("¿Desea guardar la lista de libros en un .txt o .csv? ")
-    if formato == '.txt':
-        with open(".\lista_de_libros.txt", "w", newline="") as txt_file:
-            txt_writer=csv.writer(txt_file, delimiter=",")
-            for linea in Lista:
-                txt_writer.writerow(linea)
+    creacionMenu([".txt", ".csv", "Salir al Menú"])
+    op = validarRangoInt(1,3,"Ingrese la opción de búsqueda: ")
+    if op == 1:
+        txt_file = open(".\lista_de_libros.txt", "w", encoding="utf-8")
+        head = ["Título", "Género", "ISBN", "Editorial", "Autores"]
+        data = []
+        for libro in Lista:
+            autores="\n".join(libro.get_autores())
+            data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), autores])
+             
+        txt_file.write(tabulate(data, headers=head, tablefmt="grid"))
         print("La lista de archivos se guardó en lista_libros.txt")
 
-    elif formato == '.csv':
-        with open("lista_de_libros.csv", "w", newline="") as csv_file:
-            csv_writer=csv.writer(csv_file, delimiter=",")
-            for linea in Lista:
-                csv_writer.writerow(linea)
+    elif op == 2:
+        txt_csv = open(".\lista_de_libros.csv", "w", encoding="utf-8")
+        head = ["Título", "Género", "ISBN", "Editorial", "Autores"]
+        data = []
+        for libro in Lista:
+            autores="\n".join(libro.get_autores())
+            data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), autores])
+             
+        txt_csv.write(tabulate(data, headers=head, tablefmt="grid"))
+        
         print("La lista de archivos se guardó en lista_libros.csv")
     else:
-        print("El tipo de archivo ingresado no es el correcto")
+        print("Adios")
 
 def Buscar_en_libros_2(atributoBuscar: str, libros: list[Libro], palabraBuscar: str):
     resultados = []
