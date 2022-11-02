@@ -41,7 +41,7 @@ while True:
         ordenarLibrosPorTitulo(lista_libros)
         regresarmenu()
     elif opcion == 7:
-        print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
+        print("******* BUSCAR LIBRO POR AUTOR, EDITORIAL O GENERO ********")
         Buscar_libro_por_autor_editorial_o_título(lista_libros)
         regresarmenu()
     elif opcion == 9:
