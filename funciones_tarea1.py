@@ -166,3 +166,10 @@ def listar(libros_data):
 
     # # display table
     print(tabulate(data, headers=head, tablefmt="grid"))
+
+def eliminarLibro(isbn:str, lista_libros:list[Libro]) -> None:
+    for libro in lista_libros:
+        if libro.get_ISBN() == isbn:
+            lista_libros.pop(lista_libros.index(libro))
+    print("El libro ha sido eliminado")
+

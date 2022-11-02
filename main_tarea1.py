@@ -26,6 +26,12 @@ while True:
         lista_libros.append(libro)
         print("[*** Libro agregado ****]")
         regresarmenu()
+    elif opcion == 4:
+        funcionlimpiar()
+        print("******* AGREGRAR LIBRO ********")
+        isbn=validarLeerStrings(" -Ingrese ISBN del libro a eliminar: ")
+        eliminarLibro(isbn, lista_libros)
+        regresarmenu()
     elif opcion == 5:
         print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
         Buscar_libro_por_ISBN_o_título(lista_libros)
