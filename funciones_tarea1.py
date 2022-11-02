@@ -134,6 +134,12 @@ def Buscar_en_libros(cadena: str, libros: list, tipo_separador: str, tipo_key: s
       for indice,libro in enumerate(libros):
         if tipo_key == 'titulo':
           srch_result = libro.get_titulo().lower().find(palabra)
+        elif tipo_key == 'autores':
+            srch_result = libro.get_autores().lower().find(palabra)
+        elif tipo_key == 'editorial':
+            srch_result = libro.get_editorial().lower().find(palabra)
+        elif tipo_key == 'genero':
+            srch_result = libro.get_genero().lower().find(palabra)
         else:
           srch_result = libro.get_ISBN().lower().find(palabra)
         if srch_result != -1:
@@ -173,3 +179,29 @@ def eliminarLibro(isbn:str, lista_libros:list[Libro]) -> None:
             lista_libros.pop(lista_libros.index(libro))
     print("El libro ha sido eliminado")
 
+def Buscar_libro_por_autor_editorial_o_título(data):
+    variable_a_buscar = input("¿Desea buscar por autor, editorial o por genero?")
+    #ISBN = re.search("^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", input_user)
+
+    if variable_a_buscar == 'autor':
+       print(Buscar_en_libros(variable_a_buscar, data, '','autores'))
+    elif variable_a_buscar == 'editorial':
+        print(Buscar_en_libros(variable_a_buscar, data, '','editorial'))
+    else:
+      print(Buscar_en_libros(variable_a_buscar, data, '','genero'))
+
+def guardarlibros(Lista : list) -> None:
+    formato = input("¿Desea guardar la lista de libros en un .txt o .csv? ")
+    if formato == '.txt':
+        with open(".\lista_de_libros.txt", "w", newline="") as txt_file:
+            txt_writer=csv.writer(txt_file, delimiter=",")
+            for linea in Lista:
+                txt_writer.writerow(linea)
+    print("La lista de archivos se guardó en lista_libros.txt")
+
+    if formato == '.csv':
+        with open("lista_de_libros.csv", "w", newline="") as csv_file:
+            csv_writer=csv.writer(csv_file, delimiter=",")
+            for linea in Lista:
+                csv_writer.writerow(linea)
+        print("La lista de archivos se guardó en lista_libros.csv")
