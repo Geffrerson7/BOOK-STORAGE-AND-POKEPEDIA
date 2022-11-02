@@ -9,7 +9,6 @@ from funciones_utilidades import *
 
 def CargarArchivo(objetos_libros) -> list:
     try:
-        print("***** CARGAR EL ARCHIVO DE LIBROS *******")
         direccion = input("Escriba la dirección del archivo .txt o .csv: ")
         with open(direccion, "r", encoding = 'utf-8') as csv_file:
             csv_reader = csv.DictReader(csv_file)
@@ -93,28 +92,29 @@ def actualizarLibro(libro:Libro)->Libro:
 
 def modificarAutor(libro:Libro)->list[str]:
     print("**** Autores ****")
-    autores=libro.get_autores()
+    autores=[lib.lower() for lib in libro.get_autores()]
     creacionMenu(["Agregar autor","Eliminar autor","Modificar autor existente"])
     op=validarRangoInt(1,3,"Ingrese una opción: ")
     mensaje="[*** Libro actualizado ****]"
     if(op==1):
-        autor=validarLeerStrings(" ->Nuevo autor:")
+        autor=validarLeerStrings(" ->Nuevo autor:").lower()
         autores.append(autor)
     elif(op==2):
         if(len(libro.get_autores())==1):
             mensaje="[ERROR: El libro debe tener al menos 1 autor]"
         else:
-            autor=validarLeerStrings(" ->Nombre de autor a eliminar:")
+            autor=validarLeerStrings(" ->Nombre de autor a eliminar:").lower()
             if(autor in autores):
                 index=autores.index(autor)
                 autores.pop(index)
             else:
                 mensaje="[ERROR: El autor ingresado no existe]"
     elif(op==3):
-        autor=validarLeerStrings(" ->Nombre de autor a modificar:")
+        autor=validarLeerStrings(" ->Nombre del autor que desea modificar:").lower()
         if(autor in autores):
+            new_autor=validarLeerStrings(" ->Nuevo nombre:")
             index=autores.index(autor)
-            autores[index]=autor
+            autores[index]=new_autor
         else:
             mensaje="[ERROR: El autor ingresado no existe]"
     return autores,mensaje
@@ -205,22 +205,32 @@ def Buscar_libro_por_autor_editorial_o_título(lista_libros):
         print("Adiós")
     
 def guardarlibros(Lista : list) -> None:
-    formato = validarLeerStrings("¿Desea guardar la lista de libros en un .txt o .csv? ")
-    if formato == '.txt':
-        with open(".\lista_de_libros.txt", "w", newline="") as txt_file:
-            txt_writer=csv.writer(txt_file, delimiter=",")
-            for linea in Lista:
-                txt_writer.writerow(linea)
+    creacionMenu([".txt", ".csv", "Salir al Menú"])
+    op = validarRangoInt(1,3,"Ingrese la opción de búsqueda: ")
+    if op == 1:
+        txt_file = open(".\lista_de_libros.txt", "w", encoding="utf-8")
+        head = ["Título", "Género", "ISBN", "Editorial", "Autores"]
+        data = []
+        for libro in Lista:
+            autores="\n".join(libro.get_autores())
+            data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), autores])
+             
+        txt_file.write(tabulate(data, headers=head, tablefmt="grid"))
         print("La lista de archivos se guardó en lista_libros.txt")
 
-    elif formato == '.csv':
-        with open("lista_de_libros.csv", "w", newline="") as csv_file:
-            csv_writer=csv.writer(csv_file, delimiter=",")
-            for linea in Lista:
-                csv_writer.writerow(linea)
+    elif op == 2:
+        txt_csv = open(".\lista_de_libros.csv", "w", encoding="utf-8")
+        head = ["Título", "Género", "ISBN", "Editorial", "Autores"]
+        data = []
+        for libro in Lista:
+            autores="\n".join(libro.get_autores())
+            data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), autores])
+             
+        txt_csv.write(tabulate(data, headers=head, tablefmt="grid"))
+        
         print("La lista de archivos se guardó en lista_libros.csv")
     else:
-        print("El tipo de archivo ingresado no es el correcto")
+        print("Adios")
 
 def Buscar_en_libros_2(atributoBuscar: str, libros: list[Libro], palabraBuscar: str):
     resultados = []
