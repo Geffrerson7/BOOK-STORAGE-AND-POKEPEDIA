@@ -9,9 +9,10 @@ while True:
                  "Eliminar libro", "Buscar libro por ISBN o por título", "Ordenar libros por título",
                   "Buscar libros por autor, editorial o género", "Buscar libros por número de autores",
                   "Editar o actualizar datos de un libro", "Guardar libros en archivo","Salir"])
-    opcion = validarRangoInt(1,11,"Ingrese la opción:")
+    opcion = validarRangoInt(1,11,"Ingrese la opción: ")
     if opcion == 1:
         funcionlimpiar()
+        print("***** CARGAR EL ARCHIVO DE LIBROS *******")
         CargarArchivo(lista_libros)
         regresarmenu()
     elif opcion == 2:
