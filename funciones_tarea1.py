@@ -13,13 +13,12 @@ def CargarArchivo(objetos_libros) -> list:
         with open(direccion, "r", encoding = 'utf-8') as csv_file:
             csv_reader = csv.DictReader(csv_file)
 
-
             for row in csv_reader:
                 autores = row['AUTORES'].split(',')
                 id = crearId(len(objetos_libros))
                 libro = Libro(id, row['TITULO'], row['GENERO'], row['ISBN'], row['EDITORIAL'], autores)
                 objetos_libros.append(libro)
-            print("Archivo cargado")
+        print("Archivo cargado")
             
     except:
         print("No existe el archivo") 
@@ -180,7 +179,7 @@ def eliminarLibro(isbn:str, lista_libros:list[Libro]) -> None:
             print("El libro ha sido eliminado")
             DEL += 1
     if DEL == 0:
-        print("El código isbn no está en la lista")
+        print("ERROR: El código isbn no está en la lista")
 
 def Buscar_libro_por_autor_editorial_o_título(lista_libros):
     creacionMenu(["Autor", "Editorial", "Genero", "Salir al Menú"])
@@ -209,25 +208,24 @@ def guardarlibros(Lista : list) -> None:
     op = validarRangoInt(1,3,"Ingrese la opción de búsqueda: ")
     if op == 1:
         txt_file = open(".\lista_de_libros.txt", "w", encoding="utf-8")
-        head = ["Título", "Género", "ISBN", "Editorial", "Autores"]
-        data = []
-        for libro in Lista:
-            autores="\n".join(libro.get_autores())
-            data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), autores])
+        txt_file.write("TITULO,GENERO,ISBN,EDITORIAL,AUTORES\n")
              
-        txt_file.write(tabulate(data, headers=head, tablefmt="grid"))
+        for libro in Lista:
+            autores = ",".join(libro.get_autores())
+            data = ",".join(['"'+libro.get_titulo()+'"',libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), '"'+autores+'"'])
+            txt_file.write(data+"\n")
+        txt_file.close()
         print("La lista de archivos se guardó en lista_libros.txt")
 
     elif op == 2:
-        txt_csv = open(".\lista_de_libros.csv", "w", encoding="utf-8")
-        head = ["Título", "Género", "ISBN", "Editorial", "Autores"]
-        data = []
-        for libro in Lista:
-            autores="\n".join(libro.get_autores())
-            data.append([libro.get_titulo(), libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), autores])
+        csv_file = open(".\lista_de_libros.csv", "w", encoding="utf-8")
+        csv_file.write("TITULO,GÉNERO,ISBN,EDITORIAL,AUTORES\n")
              
-        txt_csv.write(tabulate(data, headers=head, tablefmt="grid"))
-        
+        for libro in Lista:
+            autores = ",".join(libro.get_autores())
+            data = ",".join(['"'+libro.get_titulo()+'"',libro.get_genero(), libro.get_ISBN(), libro.get_editorial(), '"'+autores+'"'])
+            csv_file.write(data+"\n")
+        csv_file.close()
         print("La lista de archivos se guardó en lista_libros.csv")
     else:
         print("Adios")
@@ -237,16 +235,16 @@ def Buscar_en_libros_2(atributoBuscar: str, libros: list[Libro], palabraBuscar: 
     for libro in libros:
         srch_result = -1
         if atributoBuscar == 'autor':
-            autores = libro.get_autores()
+            autores = [lib.lower() for lib in libro.get_autores()]
             if palabraBuscar in autores:
                 srch_result = 0
             
         if atributoBuscar == 'editorial':
-            editorial = libro.get_editorial()
+            editorial = libro.get_editorial().lower()
             srch_result = editorial.find(palabraBuscar)
             
         if atributoBuscar == 'genero':
-            genero = libro.get_genero()
+            genero = libro.get_genero().lower()
             srch_result = genero.find(palabraBuscar)
            
         if srch_result != -1:
