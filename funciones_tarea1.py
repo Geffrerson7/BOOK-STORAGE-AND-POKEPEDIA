@@ -9,7 +9,7 @@ from funciones_utilidades import *
 
 def CargarArchivo(objetos_libros) -> list:
     try:
-        direccion = input("Escriba la dirección del archivo .txt o .csv: ")
+        direccion = validarLeerStrings("Escriba la dirección del archivo .txt o .csv: ")
         with open(direccion, "r", encoding = 'utf-8') as csv_file:
             csv_reader = csv.DictReader(csv_file)
 
@@ -173,10 +173,14 @@ def listar(libros_data):
     print(tabulate(data, headers=head, tablefmt="grid"))
 
 def eliminarLibro(isbn:str, lista_libros:list[Libro]) -> None:
+    DEL = 0
     for libro in lista_libros:
         if libro.get_ISBN() == isbn:
             lista_libros.pop(lista_libros.index(libro))
-    print("El libro ha sido eliminado")
+            print("El libro ha sido eliminado")
+            DEL += 1
+    if DEL == 0:
+        print("El código isbn no está en la lista")
 
 def Buscar_libro_por_autor_editorial_o_título(lista_libros):
     creacionMenu(["Autor", "Editorial", "Genero", "Salir al Menú"])
@@ -184,17 +188,17 @@ def Buscar_libro_por_autor_editorial_o_título(lista_libros):
    
     if op == 1:
         variable_a_buscar = "autor"
-        autor_a_buscar = validarLeerStrings("Ingrese el nombre del autor: ")
+        autor_a_buscar = validarLeerStrings("Ingrese el nombre del autor: ").lower()
         libros_encontrados = Buscar_en_libros_2(variable_a_buscar, lista_libros, autor_a_buscar)
         listar(libros_encontrados)
     elif op == 2:
         variable_a_buscar = "editorial"
-        editorial_a_buscar = validarLeerStrings("Ingrese el nombre de la editorial: ")
+        editorial_a_buscar = validarLeerStrings("Ingrese el nombre de la editorial: ").lower()
         libros_encontrados = Buscar_en_libros_2(variable_a_buscar, lista_libros, editorial_a_buscar)
         listar(libros_encontrados)
     elif op == 3:
         variable_a_buscar = "genero"
-        genero_a_buscar = validarLeerStrings("Ingrese el nombre del genero: ")
+        genero_a_buscar = validarLeerStrings("Ingrese el nombre del genero: ").lower()
         libros_encontrados = Buscar_en_libros_2(variable_a_buscar, lista_libros, genero_a_buscar)
         listar(libros_encontrados)
     else:

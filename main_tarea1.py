@@ -30,7 +30,7 @@ while True:
     elif opcion == 4:
         funcionlimpiar()
         print("******* ELIMINAR LIBRO ********")
-        isbn=validarLeerStrings(" -Ingrese ISBN del libro a eliminar: ")
+        isbn = validarLeerStrings(" -Ingrese ISBN del libro a eliminar: ")
         eliminarLibro(isbn, lista_libros)
         regresarmenu()
     elif opcion == 5:
@@ -45,10 +45,12 @@ while True:
         ordenarLibrosPorTitulo(lista_libros)
         regresarmenu()
     elif opcion == 7:
+        funcionlimpiar()
         print("******* BUSCAR LIBRO POR AUTOR, EDITORIAL O GENERO ********")
         Buscar_libro_por_autor_editorial_o_título(lista_libros)
         regresarmenu()
     elif opcion == 8:
+        funcionlimpiar()
         print("******* BUSCAR LIBRO POR AUTOR, EDITORIAL O GENERO ********")
         Buscar_por_numero_autores(lista_libros)
         regresarmenu()
