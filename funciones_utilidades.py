@@ -17,7 +17,7 @@ def validarLeerStrings(mensaje:str)->str:
     while True:
         variableLeer=input(mensaje)
         if(variableLeer!=""):
-            return variableLeer
+            return variableLeer.strip()
         print("[El valor a ingresar no debe ser vacio]")
 
 def validarLeerInt(mensaje:str)->int:
