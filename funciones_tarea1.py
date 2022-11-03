@@ -31,7 +31,7 @@ def crearLibro(lista_libros:list[Libro]) -> Libro:
     print("Ingrese datos del libro:")
     titulo = validarLeerStrings(" -Título:")
     genero = validarLeerStrings(" -Género: ")
-    isbn = validarISBN()
+    isbn = ingresarISBN(" -ISBN: ")
     editorial = validarLeerStrings(" -Editorial: ")
     nroAutores = validarNroAutores()
     autores = leerArrayStrings("  ->Autor ", nroAutores)
@@ -45,13 +45,12 @@ def validarNroAutores()->int:
             return nroAutores
         print("[Se debe ingresar al menos 1 autor para el libro]")
 
-def validarISBN()->str:
+def ingresarISBN(mensaje:str)->str:
     while True:
-        isbn = validarLeerStrings(" -ISBN: ")
-        aux=isbn.replace("-","")
-        if(len(aux)>=10 and len(aux)<=13):
+        isbn = validarLeerStrings(mensaje)
+        if ValidarISBN(isbn) is not None:
             return isbn
-        print("[El ISBN debe estar entre 10 o 13 digitos numéricos (Ejemplo: 789-46-4268-197-5 o 7894642681975)]")
+        print("[El ISBN debe estar entre 10 o 13 digitos numéricos (Ejemplo: 789-46-4268-197-5)]")
 
 def ordenarLibrosPorTitulo(libros:list[Libro])->list[str]:
     titulosOrdenados=[libro.get_titulo() for libro in libros]
@@ -75,7 +74,7 @@ def actualizarLibro(libro:Libro)->Libro:
                 genero = validarLeerStrings(" -Nuevo Género: ")
                 libro.set_genero(genero)
             elif(atributo==variablesActualizar[4]):
-                isbn = validarLeerStrings(" -Nuevo ISBN: ")
+                isbn = ingresarISBN(" -Nuevo ISBN: ")
                 libro.set_ISBN(isbn)
             elif(atributo==variablesActualizar[5]):
                 editorial = validarLeerStrings(" -Nueva Editorial: ")
@@ -117,6 +116,12 @@ def modificarAutor(libro:Libro)->list[str]:
         else:
             mensaje="[ERROR: El autor ingresado no existe]"
     return autores,mensaje
+
+def buscarLibro(isbn:str,lista_libros:list[Libro])->list[Libro]:
+    for libro in lista_libros:
+        if(libro.get_ISBN()==isbn):
+            return libro,lista_libros.index(libro)
+    return None,-1
 
 def buscarISBN(isbn:str,lista_libros:list[Libro])->list[Libro]:
     result = []

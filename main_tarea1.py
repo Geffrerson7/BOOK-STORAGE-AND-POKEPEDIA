@@ -30,7 +30,7 @@ while True:
     elif opcion == 4:
         funcionlimpiar()
         print("******* ELIMINAR LIBRO ********")
-        isbn = ValidarISBN(" -Ingrese ISBN del libro a eliminar: ")
+        isbn = ingresarISBN(" -Ingrese ISBN del libro a eliminar: ")
         eliminarLibro(isbn, lista_libros)
         regresarmenu()
     elif opcion == 5:
@@ -58,7 +58,7 @@ while True:
         funcionlimpiar()
         print("****** EDITAR LIBRO ******")
         isbn=validarLeerStrings(" -Ingrese ISBN del libro a editar: ")
-        libroActualizar,index=buscarISBN(isbn,lista_libros)
+        libroActualizar,index=buscarLibro(isbn,lista_libros)
         if(libroActualizar is not None):
             print("***** OPCIONES DE EDICIÓN ***** ")
             creacionMenu(["Editar todos los datos del libro","Actualizar un dato en especifico","Cancelar"])
