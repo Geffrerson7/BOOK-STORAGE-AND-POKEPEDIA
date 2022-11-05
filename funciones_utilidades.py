@@ -42,6 +42,18 @@ def validarRangoInt(inicio: int, final: int, mensaje: str) -> int:
             return variable
         print("[El número ingresado no está en el rango indicado]")
 
+def validarRangoConString(inicio: int, final: int,stringAceptados:list[str], mensaje: str) -> int:
+    """Valida que una opcion ingresada este en el rango indicado, ademas acepta string de una lista"""
+    while True:
+        variable = input(mensaje)
+        if variable.isnumeric():
+            variable=int(variable)
+            if variable >= inicio and variable <= final:
+                return variable
+            print("[El número ingresado no está en el rango indicado]")
+        elif variable.lower() in stringAceptados:
+            return variable.lower()
+        print("[La variable ingresada no es válida]")
 
 def leerArrayStrings(mensaje: str, longitud: int) -> list[str]:
     """Recibe un mensaje para el input y la longitud del array a recorrer, solo es para valores de tipo str"""
