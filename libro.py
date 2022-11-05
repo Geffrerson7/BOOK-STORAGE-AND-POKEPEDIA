@@ -6,24 +6,24 @@ class Libro:
         self.__ISBN = ISBN
         self.__editorial = editorial
         self.__autores = autores
-    
-    def get_id(self)->int:
-        return self.__id
-        
-    def set_id(self,id:int)->None:
-        self.__id=id
 
-    def get_titulo(self)->str:
+    def get_id(self) -> int:
+        return self.__id
+
+    def set_id(self, id: int) -> None:
+        self.__id = id
+
+    def get_titulo(self) -> str:
         return self.__titulo
 
-    def set_titulo(self,titulo:str)->None:
-        self.__titulo=titulo
+    def set_titulo(self, titulo: str) -> None:
+        self.__titulo = titulo
 
-    def get_genero(self)->str:
+    def get_genero(self) -> str:
         return self.__genero
 
-    def set_genero(self,genero:str)->None:
-        self.__genero=genero
+    def set_genero(self, genero: str) -> None:
+        self.__genero = genero
 
     def get_ISBN(self) -> str:
         return self.__ISBN
@@ -43,5 +43,5 @@ class Libro:
     def set_autores(self, autores) -> None:
         self.__autores = autores
 
-    def __del__(self)->None:
+    def __del__(self) -> None:
         return None
