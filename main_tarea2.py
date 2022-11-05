@@ -37,26 +37,18 @@ def mostrarHabildades(url, start):
         parametrosSiguientes = paramURL(next)
         ultimoElemento = int(parametrosSiguientes["offset"]) + 1
         antesUltimo = ultimoElemento
-        print(
-            "[Existen",
-            count,
-            "habilidades. Actualmente mostrando de",
-            comienzoPagina,
-            "a",
-            ultimoElemento - 1,
-            "]",
-        )
+        print("[Existen",count,"habilidades. Actualmente mostrando de",comienzoPagina,"a",ultimoElemento - 1,"]")
         prev = respuestaHabilidades["previous"]  # URL DE PAGINA ANTERIOR
         creacionMenu(listarHablidades(respuestaHabilidades["results"]), start)
         if prev is not None:
             param = paramURL(prev)
             print(str(antesUltimo) + ") VER ANTERIORES")
-            ultimo += 1
+            ultimoElemento += 1
         if next is not None:
-            print(str(ultimo) + ") VER MÁS")
+            print(str(ultimoElemento) + ") VER MÁS")
         op = validarLeerInt(" -Ingrese una opción: ")
-        if op == ultimo:
-            mostrarHabildades(next, ultimo)
+        if op == ultimoElemento:
+            mostrarHabildades(next, ultimoElemento)
         elif op == antesUltimo:
             mostrarHabildades(prev, int(param["offset"]) + 1)
     except:
