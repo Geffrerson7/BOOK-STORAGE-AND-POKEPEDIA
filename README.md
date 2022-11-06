@@ -21,6 +21,7 @@
     - [Listar pokemons por habilidad](#opción-3-listar-pokemons-por-habilidad)    
     - [Listar pokemons por habitat](#opción-4-listar-pokemons-por-habitat)       
     - [Listar pokemons por tipo](#opción-5-listar-pokemons-por-tipo) 
+3. [Módulos a instalar](#módulos-a-instalar)  
 ***
 ## Tarea1: BIBLIOTECA
 ***
@@ -47,3 +48,7 @@
 ### Opción 3: Listar pokemons por habilidad
 ### Opción 4: Listar pokemons por habitat
 ### Opción 5: Listar pokemons por tipo
+
+***
+## Módulos a instalar
+***
