@@ -311,6 +311,9 @@ def mostrarForma(url_formas: str) -> None:
             respuesta1 = json.loads(peticion1.content)
             creacionMenu(listarOpciones(respuesta1["results"]), 1)
             op = validarLeerStrings("Escriba la forma a buscar: ")
+            if op.isnumeric():
+                print("[No ingrese un número]")
+                return
             listar_de_a_diez(buscarForma(op))
         else:
             print("[La forma que ha ingresado no existe]")
@@ -342,48 +345,6 @@ def get_data_endpoint(url: str, key: str):
     except:
         print("[ERROR DE CONEXIÓN]")
     return results
-
-
-def get_opciones_habits(url: str):
-    results = get_data_endpoint(url, "results")
-    habits = []
-    for indice, result in enumerate(results):
-        print("(", indice + 1, ")", result["name"])
-        habits.append(result["name"])
-    return habits
-
-
-def print_pokemons_habits(pokemons, habitat):
-    lista_pokemons = []
-    for pokemon in pokemons:
-        other_url_pokemon = "".join(pokemon["url"].split("-species"))
-        url_img = get_data_endpoint(other_url_pokemon, "sprites")["front_default"]
-        lista_pokemons.append(
-            [
-                pokemon["name"],
-                habitat,
-                url_img,
-            ]
-        )
-
-    head = ["Nombre Pokemon", "Url Image", "Habitats"]
-    print(tabulate(lista_pokemons, headers=head, tablefmt="fancy_grid"))
-
-
-def print_pokemons_tipo(pokemons, tipo):
-    lista_pokemons = []
-    for pokemon in pokemons:
-        url_pokemon = pokemon["pokemon"]["url"]
-        url_img = get_data_endpoint(url_pokemon, "sprites")["front_default"]
-        lista_pokemons.append(
-            [
-                pokemon["pokemon"]["name"],
-                tipo,
-                url_img,
-            ]
-        )
-    head = ["Nombre Pokemon", "Url Image", "Habitats"]
-    print(tabulate(lista_pokemons, headers=head, tablefmt="fancy_grid"))
 
 
 def listadoPorHabitat():
