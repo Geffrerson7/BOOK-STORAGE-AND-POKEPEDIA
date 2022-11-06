@@ -17,9 +17,13 @@ def menu():
         )
         opcion = validarRangoInt(1, 6, "Ingrese la opción: ")
         if opcion == 1:
-            pass
+            funcionlimpiar()
+            listarGeneracion()
+            regresarmenu()
         elif opcion == 2:
-            pass
+            funcionlimpiar()
+            listarForma()
+            regresarmenu()
         elif opcion == 3:
             funcionlimpiar()
             listadoPorHabilidad()
