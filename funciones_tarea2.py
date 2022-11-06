@@ -9,19 +9,23 @@ URLHABILIDADES = "https://pokeapi.co/api/v2/ability/"
 URLGENERACIONES = "https://pokeapi.co/api/v2/generation/"
 URLFORMAS = "https://pokeapi.co/api/v2/pokemon-shape/"
 URLPOKEMON = "https://pokeapi.co/api/v2/pokemon/"
-URL_HABITS = 'https://pokeapi.co/api/v2/pokemon-habitat/'
-URL_TYPE = 'https://pokeapi.co/api/v2/type/'
+URLPOKEMONSPECIES = "https://pokeapi.co/api/v2/pokemon-species/"
+URL_HABITS = "https://pokeapi.co/api/v2/pokemon-habitat/"
+URL_TYPE = "https://pokeapi.co/api/v2/type/"
+
 
 def listadoPorHabilidad():
     print("********** LISTADO POR HABILIDADES ********")
     creacionMenu(["Ingrese la habilidad", "Ver opciones de habilidades", "Cancelar"])
     op = validarRangoInt(1, 3, "Elija una opción: ")
     if op == 1:
-        habilidad = validarLeerStrings(" -Ingrese la habilidad a buscar [id o nombre]: ")
+        habilidad = validarLeerStrings(
+            " -Ingrese la habilidad a buscar [id o nombre]: "
+        )
         funcionlimpiar()
         lista = buscarHabilidad(habilidad)
         if lista:  # si no esta vacia
-            listar(lista)
+            listar_de_a_diez(lista)
         else:
             print("[NO HAY POKEMONES CON ESTA HABILIDAD :c]")
     elif op == 2:
@@ -40,45 +44,61 @@ def mostrarHabildades(url, start):
         next = respuestaHabilidades["next"]  # URL DE SGT PAGINA
         count = respuestaHabilidades["count"]
         prev = respuestaHabilidades["previous"]  # URL DE PAGINA ANTERIOR
-        pPag=parametrosPag(prev,next,count)
-        print("[Existen",count,"habilidades. Actualmente mostrando de",comienzoPagina,"a",pPag["ultimoElemento"] - 1,"]")
+        pPag = parametrosPag(prev, next, count)
+        print(
+            "[Existen",
+            count,
+            "habilidades. Actualmente mostrando de",
+            comienzoPagina,
+            "a",
+            pPag["ultimoElemento"] - 1,
+            "]",
+        )
         creacionMenu(listarOpciones(respuestaHabilidades["results"]), start)
         if pPag["verAnterior"] is not None:
             print("A) VER ANTERIORES")
         if pPag["verMas"] is not None:
             print("B) VER MÁS")
-        
-        op = validarRangoConString(1,327,pPag["opciones"]," -Ingrese una opción: ")
+
+        op = validarRangoConString(1, 327, pPag["opciones"], " -Ingrese una opción: ")
         if op == "b":
             mostrarHabildades(next, pPag["ultimoElemento"])
         elif op == "a":
             mostrarHabildades(prev, pPag["elementoAnterior"])
         else:
-            if(op>267):
-                op=9734+op-1
+            if op > 267:
+                op = 9734 + op - 1
             lista = buscarHabilidad(str(op))
             if lista:  # si no esta vacia
-                listar(lista)
+                listar_de_a_diez(lista)
             else:
                 print("[NO HAY POKEMONES CON ESA HABILIDAD]")
     except:
         print("[ERROR DE CONEXIÓN CON EL API]")
 
-def parametrosPag(prev,next,count):
-    parametrosNecesarios={"ultimoElemento":count+1,"verMas":None,"verAnterior":None,"elementoAnterior":1,"opciones":[]}
+
+def parametrosPag(prev, next, count):
+    parametrosNecesarios = {
+        "ultimoElemento": count + 1,
+        "verMas": None,
+        "verAnterior": None,
+        "elementoAnterior": 1,
+        "opciones": [],
+    }
     if next is not None:
         parametrosSiguientes = paramURL(next)
         ultimoElemento = int(parametrosSiguientes["offset"]) + 1
-        parametrosNecesarios["ultimoElemento"]=ultimoElemento
-        parametrosNecesarios["verMas"]=True
+        parametrosNecesarios["ultimoElemento"] = ultimoElemento
+        parametrosNecesarios["verMas"] = True
         parametrosNecesarios["opciones"].append("b")
     if prev is not None:
         parametroAnteriores = paramURL(prev)
-        primerElemento=int(parametroAnteriores["offset"]) + 1
-        parametrosNecesarios["elementoAnterior"]=primerElemento
-        parametrosNecesarios["verAnterior"]=True
+        primerElemento = int(parametroAnteriores["offset"]) + 1
+        parametrosNecesarios["elementoAnterior"] = primerElemento
+        parametrosNecesarios["verAnterior"] = True
         parametrosNecesarios["opciones"].append("a")
     return parametrosNecesarios
+
 
 def paramURL(url):
     if "?" in url:
@@ -105,7 +125,7 @@ def buscarHabilidad(habilidad):
         request = requests.get(URLHABILIDADES + habilidad)
         if request.ok:
             rpta = request.json()
-            print("HABILIDAD:",rpta["name"].upper())
+            print("HABILIDAD:", rpta["name"].upper())
             generadorUrlPokemon = urlPokemon(rpta["pokemon"])
             for url in generadorUrlPokemon:
                 pokemonCreado = crearPokemon(url)
@@ -141,47 +161,40 @@ def crearPokemon(url):
         return None
 
 
-def listar(lista_pokemones):
-    # create header
-    
-    head = ["Nombre Pokemon", "Url Image", "Habilidades"]
+def generadorPokemones(listado, index):
+    for poke in listado:
+        habilidades = "\n".join(poke.habilidades)
+        lista = [poke.name,habilidades, poke.urlImg]
+        yield lista, index
+        index += 1
+
+
+def listar_de_a_diez(listado):  # listar_10_pokes
+    """Imprime los pokemons y sus datos de diez en diez"""
+    head = ["Nombre", "Habilidades", "Url Image"]
     data = []
-    for poke in lista_pokemones:
-        # autores="\n".join(libro.habilidades)
-        data.append([poke.name, poke.urlImg, str(poke.habilidades)])
-    # # display table
-    print(tabulate(data, headers=head, tablefmt="grid"))
-
-def listar_de_a_diez(data):  # listar_10_pokes
-    '''Imprime los pokemons y sus datos de diez en diez'''
-    head = [
-        "Nombre",
-        "Habilidades",
-        "Url Image",
-    ]
-
-    
     i = 0
-    while i <= len(data) - 10:
+    limit = 9
+    registroPoke = generadorPokemones(listado, i)
+    for poke, contador in registroPoke:
+        data.append(poke)
+        if contador == limit and len(listado) > 10:
+            print(tabulate(data, headers=head, tablefmt="fancy_grid"))
+            r = validarLeerStrings(
+                "¿Desea continuar buscando? Presione la tecla 'S' si su respuesta es si, de lo contrario presione otra letra: "
+            ).lower()
+            if r == "s":
+                data = []
+                limit += 9
+                continue
+            else:
+                return
+    # funcionlimpiar()
+    print(tabulate(data, headers=head, tablefmt="fancy_grid"))
+    print("[ESOS FUERON TODOS LOS RESULTADOS]")
 
-        print(tabulate(data[i : i + 10], headers=head, tablefmt="grid"))
-        r = validarLeerStrings(
-            "¿Desea continuar buscando?Presione la tecla s si su respuesta es si, de lo contrario presione otra tecla: "
-        ).lower()
-        if i == (len(data) - 10) - len(data) % 10:
 
-            print(
-                tabulate(
-                    data[len(data) - (len(data)) % 10 :], headers=head, tablefmt="grid"
-                )
-            )
-        if r == "s":
-            i += 10
-            continue
-        else:
-            break
-
-def buscarGeneracion(generacion:int) -> None:
+def buscarGeneracion(generacion: int) -> None:
     """Imprime los datos de los pokemons de la generacion a buscar"""
     listado_Pokemones = []
     try:
@@ -194,35 +207,22 @@ def buscarGeneracion(generacion:int) -> None:
 
                 nombre_pokemon = gen["name"]
                 url_poke = URLPOKEMON + nombre_pokemon + "/"
-
-                res_pok = requests.get(url_poke)
-                if res_pok.ok:
-                    respuestaPokemon = json.loads(res_pok.content)
-                    habilidadesList = []
-
-                    for pokemon in respuestaPokemon["abilities"]:
-                        habilidadesList.append(pokemon["ability"]["name"])
-                    habilidades = "\n".join(habilidadesList)
-                    listado_Pokemones.append(
-                        [
-                            respuestaPokemon["name"],
-                            habilidades,
-                            respuestaPokemon["sprites"]["front_default"],
-                        ]
-                    )
+                pokemonCreado = crearPokemon(url_poke)
+                if pokemonCreado is not None:
+                    listado_Pokemones.append(pokemonCreado)
                 else:
                     print("[ERROR EN LA CREACIÓN DEL POKEMON]")
-
+                    break
         else:
             print("[La generacion que ha ingresado no existe]")
     except:
         print("[ERROR DE CONEXIÓN CON EL API]")
     listar_de_a_diez(listado_Pokemones)
 
+
 def listarGeneracion() -> None:
     """Imprime los datos de los pokemons de una genracion"""
     while True:
-
         print("***** LISTAR POR GENERACION *******")
         creacionMenu(
             [
@@ -256,39 +256,25 @@ def listarGeneracion() -> None:
             buscarGeneracion(8)
         else:
             break
-    
-def buscarForma(url_forma:str) -> list[str]:
+
+
+def buscarForma(url_forma: str) -> list[str]:
     """Retorna la lista de pokemons según la lista ingresada"""
     listado_Pokemones = []
     try:
-        
         peticion1 = requests.get(url_forma)
         if peticion1.ok:
-
             respuesta1 = json.loads(peticion1.content)
-
             for forma_poke in respuesta1["pokemon_species"]:
-
-                nombre_pokemon = forma_poke["name"]
-                url_poke = URLPOKEMON + nombre_pokemon + "/"
-                try: 
-                    res_pok = requests.get(url_poke)
-                    if res_pok.ok:
-                        respuestaPokemon = json.loads(res_pok.content)
-                        habilidadesList = []
-
-                        for pokemon in respuestaPokemon["abilities"]:
-                            habilidadesList.append(pokemon["ability"]["name"])
-                        habilidades = "\n".join(habilidadesList)
-                        listado_Pokemones.append(
-                            [
-                                respuestaPokemon["name"],
-                                habilidades,
-                                respuestaPokemon["sprites"]["front_default"],
-                            ]
-                        )
+                url_especies = forma_poke["url"]
+                url_poke = "".join(url_especies.split("-species"))
+                try:
+                    pokemonCreado = crearPokemon(url_poke)
+                    if pokemonCreado is not None:
+                        listado_Pokemones.append(pokemonCreado)
                     else:
-                        print("[ERROR EN LA BÚSQUEDA DEL POKEMON]")
+                        print("[ERROR EN LA CREACIÓN DEL POKEMON]")
+                        break
                 except:
                     print("[ERROR DE CONEXIÓN CON EL API]")
         else:
@@ -298,16 +284,16 @@ def buscarForma(url_forma:str) -> list[str]:
     return listado_Pokemones
 
 
-def validarForma(forma:str) -> str:
+def validarForma(forma: str) -> str:
     """Valida si la forma ingresada por el pokemon"""
     try:
-        
+
         peticion1 = requests.get(URLFORMAS)
         if peticion1.ok:
 
             respuesta1 = json.loads(peticion1.content)
             for form in respuesta1["results"]:
-                
+
                 if form["name"] == forma:
                     url_form = form["url"]
                     return url_form
@@ -322,16 +308,13 @@ def validarForma(forma:str) -> str:
         print("[ERROR DE CONEXIÓN CON EL API]")
 
 
-def mostrarForma(url_formas:str) -> None:
+def mostrarForma(url_formas: str) -> None:
     """Imprime las 14 formas de pokemons que existen"""
     try:
-
         peticion1 = requests.get(url_formas)
         if peticion1.ok:
-
             respuesta1 = json.loads(peticion1.content)
             creacionMenu(listarOpciones(respuesta1["results"]), 1)
-            
         else:
             print("[La forma que ha ingresado no existe]")
     except:
@@ -347,7 +330,7 @@ def listarForma():
         forma = validarLeerStrings(" -Ingrese la forma a buscar: ")
         funcionlimpiar()
         url_forma = validarForma(forma)
-        if url_forma is not None:  
+        if url_forma is not None:
             listar_de_a_diez(buscarForma(url_forma))
         else:
             print("[NO HAY POKEMONES CON ESTA FORMA :c]")
@@ -356,59 +339,93 @@ def listarForma():
 
 
 def get_data_endpoint(url: str, key: str):
-    resp = requests.get(url)
-    data = resp.json()
-    results = data[key]
+    results=[]
+    try:
+        resp = requests.get(url)
+        if resp.ok:
+            data = resp.json()
+            results = data[key]
+    except:
+        print("[ERROR DE CONEXIÓN]")
     return results
 
 def get_opciones_habits(url: str):
-    results = get_data_endpoint(url,'results')
-    habits =[]
-    for indice,result in enumerate(results):
-        print("(",indice+1,")", result["name"])
-        habits.append(result['name'])
+    results = get_data_endpoint(url, "results")
+    habits = []
+    for indice, result in enumerate(results):
+        print("(", indice + 1, ")", result["name"])
+        habits.append(result["name"])
     return habits
+
 
 def print_pokemons_habits(pokemons, habitat):
     lista_pokemons = []
     for pokemon in pokemons:
-        other_url_pokemon = ''.join(pokemon['url'].split('-species'))
-        url_img = get_data_endpoint(other_url_pokemon, 'sprites')['front_default']
+        other_url_pokemon = "".join(pokemon["url"].split("-species"))
+        url_img = get_data_endpoint(other_url_pokemon, "sprites")["front_default"]
         lista_pokemons.append(
-           [ pokemon["name"],
-            habitat,
-            url_img,]
+            [
+                pokemon["name"],
+                habitat,
+                url_img,
+            ]
         )
-    
+
     head = ["Nombre Pokemon", "Url Image", "Habitats"]
     print(tabulate(lista_pokemons, headers=head, tablefmt="fancy_grid"))
+
+
 def print_pokemons_tipo(pokemons, tipo):
     lista_pokemons = []
     for pokemon in pokemons:
-        url_pokemon = pokemon['pokemon']['url']
-        url_img = get_data_endpoint(url_pokemon, 'sprites')['front_default']
+        url_pokemon = pokemon["pokemon"]["url"]
+        url_img = get_data_endpoint(url_pokemon, "sprites")["front_default"]
         lista_pokemons.append(
-           [ pokemon['pokemon']["name"],
-            tipo,
-            url_img,]
+            [
+                pokemon["pokemon"]["name"],
+                tipo,
+                url_img,
+            ]
         )
     head = ["Nombre Pokemon", "Url Image", "Habitats"]
     print(tabulate(lista_pokemons, headers=head, tablefmt="fancy_grid"))
 
+
 def listadoPorHabitat():
     print("********** LISTADO POR HABITAT ********")
-    habitats= get_opciones_habits(URL_HABITS)
-    num_habitat = validarRangoInt(1,len(habitats),"Ingrese una opción en números: ")
-    endpoint = URL_HABITS+str(num_habitat)
-    pokemons = get_data_endpoint(endpoint,"pokemon_species")
-    print_pokemons_habits(pokemons, habitats[num_habitat-1])
-
-def  listadoPorTipo():
-    print("********** LISTADO POR TIPO ********")
-    tipos= get_opciones_habits(URL_TYPE)
-    num_tipo=validarRangoInt(1,len(tipos),"Ingrese una opción en números: ")
-    endpoint = URL_TYPE+str(num_tipo)
-    print(tipos[num_tipo-1])
-    pokemons = get_data_endpoint(endpoint,"pokemon")
-    print_pokemons_tipo(pokemons, tipos[num_tipo-1])
+    try:
+        peticion1 = requests.get(URL_HABITS)
+        listado_Pokemones=[]
+        if peticion1.ok:
+            respuesta1 = json.loads(peticion1.content)
+            habitats=listarOpciones(respuesta1["results"])
+            creacionMenu(habitats, 1)
+            num_habitat = validarRangoInt(1, len(habitats), "Ingrese una opción en números: ")
+            endpoint = URL_HABITS + str(num_habitat)#1
+            pokemons = get_data_endpoint(endpoint, "pokemon_species")
+            if pokemons:
+                for poke in pokemons:
+                    url="".join(poke["url"].split("-species"))
+                    pokemonCreado=crearPokemon(url)
+                    if pokemonCreado is not None:
+                        listado_Pokemones.append(pokemonCreado)
+                    else:
+                        print("[ERROR EN LA CREACIÓN DEL POKEMON]")
+                        break
+                listar_de_a_diez(listado_Pokemones)
+            else:
+                print("[NO HAY DATA DE POKEMONES EN ESTE HABITAT]")
+        else:
+            print("[Sucedio un error en la petición]")
+    except:
+        print("[ERROR DE CONEXIÓN CON EL API]")
     
+
+def listadoPorTipo():
+    print("********** LISTADO POR TIPO ********")
+    tipos = get_opciones_habits(URL_TYPE)
+    num_tipo = validarRangoInt(1, len(tipos), "Ingrese una opción en números: ")
+    endpoint = URL_TYPE + str(num_tipo)
+    print(tipos[num_tipo - 1])
+    pokemons = get_data_endpoint(endpoint, "pokemon")
+    print_pokemons_tipo(pokemons, tipos[num_tipo - 1])
