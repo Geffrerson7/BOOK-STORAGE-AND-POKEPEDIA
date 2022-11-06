@@ -40,7 +40,7 @@ def mostrarHabildades(url, start):
         prev = respuestaHabilidades["previous"]  # URL DE PAGINA ANTERIOR
         pPag=parametrosPag(prev,next,count)
         print("[Existen",count,"habilidades. Actualmente mostrando de",comienzoPagina,"a",pPag["ultimoElemento"] - 1,"]")
-        creacionMenu(listarHablidades(respuestaHabilidades["results"]), start)
+        creacionMenu(listarOpciones(respuestaHabilidades["results"]), start)
         if pPag["verAnterior"] is not None:
             print("A) VER ANTERIORES")
         if pPag["verMas"] is not None:
@@ -85,7 +85,7 @@ def paramURL(url):
         return query
 
 
-def listarHablidades(listaH):
+def listarOpciones(listaH):
     lista = []
     for item in listaH:
         lista.append(item["name"])
@@ -305,6 +305,7 @@ def validarForma(forma:str) -> str:
 
             respuesta1 = json.loads(peticion1.content)
             for form in respuesta1["results"]:
+                
                 if form["name"] == forma:
                     url_form = form["url"]
                     return url_form
@@ -327,10 +328,8 @@ def mostrarForma(url_formas:str) -> None:
         if peticion1.ok:
 
             respuesta1 = json.loads(peticion1.content)
-            print("Estas son las 14 formas de pokemos que existen:")
-            for forma in respuesta1["results"]:
-                print(forma["name"])
-
+            creacionMenu(listarOpciones(respuesta1["results"]), 1)
+            
         else:
             print("[La forma que ha ingresado no existe]")
     except:
