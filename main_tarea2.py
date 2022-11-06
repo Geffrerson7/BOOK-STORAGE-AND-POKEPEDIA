@@ -1,25 +1,43 @@
-"""BIENVENIDO A LA POKEPEDIA"""
+from funciones_tarea2 import *
+from funciones_utilidades import *
 
-import requests
+def menu():
+    while True:
+        funcionlimpiar()
+        print("***** POKEPEDIA *******")
+        creacionMenu(
+            [
+                "Listar pokemons por generación",
+                "Listar pokemons por forma",
+                "Listar pokemons por habilidad",
+                "Listar pokemons por habitat",
+                "Listar pokemons por tipo",
+                "Salir"
+            ]
+        )
+        opcion = validarRangoInt(1, 6, "Ingrese la opción: ")
+        if opcion == 1:
+            pass
+        elif opcion == 2:
+            pass
+        elif opcion == 3:
+            funcionlimpiar()
+            listadoPorHabilidad()
+            regresarmenu()
+        elif opcion == 4:
+            pass
+        elif opcion == 5:
+            
+            pass
+        elif opcion == 6:
+            break
 
-def get_data_endpoint(url: str, key: str):
-    resp = requests.get(url)
-    data = resp.json()
-    results = data[key]
-    return results
-url_pokemon_habit = 'https://pokeapi.co/api/v2/pokemon-habitat/'
-def get_opciones_habits():
-    results = get_data_endpoint(url_pokemon_habit,'results')
-    habits =[]
-    for result in results:
-        habits.append(result['name'])
-    return habits
-def get_pokemones_por_habita():
-    opcion = input("Ingrese una opción en números: ")
-    endpoint = url_pokemon_habit+opcion
-    result = get_data_endpoint(endpoint,"pokemon_species")
-    return result
-        
 
-print(get_pokemones_por_habita())
+def main():
+    funcionlimpiar()
+    menu()
+
+
+if __name__ == "__main__":
+    main()
 
