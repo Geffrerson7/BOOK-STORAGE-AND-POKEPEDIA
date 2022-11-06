@@ -190,7 +190,8 @@ def listar_de_a_diez(listado):  # listar_10_pokes
             else:
                 return
     # funcionlimpiar()
-    print(tabulate(data, headers=head, tablefmt="fancy_grid"))
+    if(data):
+        print(tabulate(data, headers=head, tablefmt="fancy_grid"))
     print("[ESOS FUERON TODOS LOS RESULTADOS]")
 
 
