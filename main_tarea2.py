@@ -22,7 +22,7 @@ def menu():
             regresarmenu()
         elif opcion == 2:
             funcionlimpiar()
-            listarForma
+            listarForma()
             regresarmenu()
         elif opcion == 3:
             funcionlimpiar()
