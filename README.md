@@ -33,6 +33,7 @@
 ***
 ### Opción 1: Leer archivo de disco duro
 ### Opción 2: Listar libros
+Esta opción permite ver todos los libros guardados
 ![](./Assets/1.2.Listar-libros.png)
 ### Opción 3: Agregar libro
 Consideraciones: 
@@ -41,7 +42,9 @@ Consideraciones:
 ![](./Assets/1.3.Agregar-Libro.png)
 ### Opción 4: Eliminar libro
 ### Opción 5: Buscar libro por ISBN o por título
+Caso ISBN:
 ![](./Assets/1.5.Buscar-libro-por-isbn.png)
+Caso título:
 ![](./Assets/1.5.Buscar-libro-por-titulo.png)
 ### Opción 6: Ordenar libros por título
 ![](./Assets/1.6.OrdenarLibrosPorTitulo.png)
@@ -64,8 +67,9 @@ Consideraciones:
 ### Opción 2: Listar pokemons por forma
 ### Opción 3: Listar pokemons por habilidad
 ### Opción 4: Listar pokemons por habitat
+![](./Assets/2.4.Listado-por-habitat.png)
 ### Opción 5: Listar pokemons por tipo
-
+![](./Assets/2.5.Listado-por-tipo.png)
 
 ***
 ## Autores
