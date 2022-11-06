@@ -424,9 +424,34 @@ def listadoPorHabitat():
 
 def listadoPorTipo():
     print("********** LISTADO POR TIPO ********")
-    tipos = get_opciones_habits(URL_TYPE)
-    num_tipo = validarRangoInt(1, len(tipos), "Ingrese una opción en números: ")
-    endpoint = URL_TYPE + str(num_tipo)
-    print(tipos[num_tipo - 1])
-    pokemons = get_data_endpoint(endpoint, "pokemon")
-    print_pokemons_tipo(pokemons, tipos[num_tipo - 1])
+    try:
+        peticion1 = requests.get(URL_TYPE)
+
+        listado_Pokemones=[]
+        if peticion1.ok:
+            respuesta1 = peticion1.json()
+            tipos=listarOpciones(respuesta1["results"])
+            print(tipos,'jknfvdvfdjkn')
+            creacionMenu(tipos, 1)
+            num_habitat = validarRangoInt(1, len(tipos), "Ingrese una opción en números: ")
+            endpoint = URL_TYPE + str(num_habitat)#1
+            pokemons = get_data_endpoint(endpoint, "pokemon")
+           
+            if pokemons:
+                
+                for poke in pokemons:
+                    url=poke["pokemon"]["url"]
+                    pokemonCreado=crearPokemon(url)
+                    if pokemonCreado is not None:
+                        listado_Pokemones.append(pokemonCreado)
+                    else:
+                        print("[ERROR EN LA CREACIÓN DEL POKEMON]")
+                        break
+                listar_de_a_diez(listado_Pokemones)
+            else:
+                print("[NO HAY DATA DE POKEMONES EN ESTE HABITAT]")
+        else:
+            print("[Sucedio un error en la petición]")
+    except:
+        print("[ERROR DE CONEXIÓN CON EL API]")
+
