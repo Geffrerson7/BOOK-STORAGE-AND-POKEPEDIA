@@ -25,16 +25,17 @@ def menu():
             listadoPorHabilidad()
             regresarmenu()
         elif opcion == 4:
-            pass
-        elif opcion == 5:
             funcionlimpiar()
             listadoPorHabitat()
             regresarmenu()
-            pass
-        elif opcion == 6:
+
+        elif opcion == 5:
             funcionlimpiar()
-            listadoPorHabilidad()
+            listadoPorTipo()
             regresarmenu()
+
+        elif opcion == 6:
+
             break
 
 

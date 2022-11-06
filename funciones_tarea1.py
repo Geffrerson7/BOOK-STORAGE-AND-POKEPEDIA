@@ -340,3 +340,4 @@ def Buscar_por_numero_autores(libros: list[Libro]):
         if num_autores_libro == num_autores_user:
             result_search.append(libro)
     listar(result_search)
+

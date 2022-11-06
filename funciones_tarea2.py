@@ -4,8 +4,9 @@ from Pokemon import *
 from tabulate import tabulate
 from urllib.parse import parse_qsl
 
-URL_HABITS = 'https://pokeapi.co/api/v2/pokemon-habitat/'
 URLHABILIDADES = "https://pokeapi.co/api/v2/ability/"
+URL_HABITS = 'https://pokeapi.co/api/v2/pokemon-habitat/'
+URL_TYPE = 'https://pokeapi.co/api/v2/type/'
 
 def listadoPorHabilidad():
     print("********** LISTADO POR HABILIDADES ********")
@@ -147,9 +148,6 @@ def listar(lista_pokemones):
     # # display table
     print(tabulate(data, headers=head, tablefmt="grid"))
 
-def listar_pokemons_habitats(lista_pokemones):
-    head = ["Nombre Pokemon", "Url Image", "Habitats"]
-    print(tabulate(lista_pokemones, headers=head, tablefmt="fancy_grid"))
 
 def get_data_endpoint(url: str, key: str):
     resp = requests.get(url)
@@ -157,19 +155,17 @@ def get_data_endpoint(url: str, key: str):
     results = data[key]
     return results
 
-def get_opciones_habits():
-    results = get_data_endpoint(URL_HABITS,'results')
+def get_opciones_habits(url: str):
+    results = get_data_endpoint(url,'results')
     habits =[]
     for indice,result in enumerate(results):
         print("(",indice+1,")", result["name"])
         habits.append(result['name'])
     return habits
 
-def print_pokemons_habits(pokemons):
+def print_pokemons_habits(pokemons, habitat):
     lista_pokemons = []
     for pokemon in pokemons:
-        url_pokemon = pokemon['url']
-        habitat = get_data_endpoint(url_pokemon,'habitat')['name']
         other_url_pokemon = ''.join(pokemon['url'].split('-species'))
         url_img = get_data_endpoint(other_url_pokemon, 'sprites')['front_default']
         lista_pokemons.append(
@@ -178,16 +174,35 @@ def print_pokemons_habits(pokemons):
             url_img,]
         )
     
-    listar_pokemons_habitats(lista_pokemons)
+    head = ["Nombre Pokemon", "Url Image", "Habitats"]
+    print(tabulate(lista_pokemons, headers=head, tablefmt="fancy_grid"))
+def print_pokemons_tipo(pokemons, tipo):
+    lista_pokemons = []
+    for pokemon in pokemons:
+        url_pokemon = pokemon['pokemon']['url']
+        url_img = get_data_endpoint(url_pokemon, 'sprites')['front_default']
+        lista_pokemons.append(
+           [ pokemon['pokemon']["name"],
+            tipo,
+            url_img,]
+        )
+    head = ["Nombre Pokemon", "Url Image", "Habitats"]
+    print(tabulate(lista_pokemons, headers=head, tablefmt="fancy_grid"))
 
 def listadoPorHabitat():
-    habitats= get_opciones_habits()
-    habitat = int(input("Ingrese una opción en números: "))
-    endpoint = URL_HABITS+str(habitat)
+    print("********** LISTADO POR HABITAT ********")
+    habitats= get_opciones_habits(URL_HABITS)
+    num_habitat = validarRangoInt(1,len(habitats),"Ingrese una opción en números: ")
+    endpoint = URL_HABITS+str(num_habitat)
     pokemons = get_data_endpoint(endpoint,"pokemon_species")
-    print_pokemons_habits(pokemons)
+    print_pokemons_habits(pokemons, habitats[num_habitat-1])
 
-def validar_input_habit():
-    print('km')   
-
-listadoPorHabitat()
+def  listadoPorTipo():
+    print("********** LISTADO POR TIPO ********")
+    tipos= get_opciones_habits(URL_TYPE)
+    num_tipo=validarRangoInt(1,len(tipos),"Ingrese una opción en números: ")
+    endpoint = URL_TYPE+str(num_tipo)
+    print(tipos[num_tipo-1])
+    pokemons = get_data_endpoint(endpoint,"pokemon")
+    print_pokemons_tipo(pokemons, tipos[num_tipo-1])
+    
