@@ -27,6 +27,7 @@ def menu():
         elif opcion == 4:
             pass
         elif opcion == 5:
+            
             pass
         elif opcion == 6:
             break
@@ -39,3 +40,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
