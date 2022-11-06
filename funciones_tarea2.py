@@ -150,8 +150,37 @@ def listar(lista_pokemones):
     # # display table
     print(tabulate(data, headers=head, tablefmt="grid"))
 
-def buscarGeneracion(generacion):
+def listar_de_a_diez(data):  # listar_10_pokes
+    '''Imprime los pokemons y sus datos de diez en diez'''
+    head = [
+        "Nombre",
+        "Habilidades",
+        "Url Image",
+    ]
 
+    
+    i = 0
+    while i <= len(data) - 10:
+
+        print(tabulate(data[i : i + 10], headers=head, tablefmt="grid"))
+        r = validarLeerStrings(
+            "¿Desea continuar buscando?Presione la tecla s si su respuesta es si, de lo contrario presione otra tecla: "
+        ).lower()
+        if i == (len(data) - 10) - len(data) % 10:
+
+            print(
+                tabulate(
+                    data[len(data) - (len(data)) % 10 :], headers=head, tablefmt="grid"
+                )
+            )
+        if r == "s":
+            i += 10
+            continue
+        else:
+            break
+
+def buscarGeneracion(generacion:int) -> None:
+    """Imprime los datos de los pokemons de la generacion a buscar"""
     listado_Pokemones = []
     try:
         url_gen = URLGENERACIONES + str(generacion) + "/"
@@ -186,9 +215,10 @@ def buscarGeneracion(generacion):
             print("[La generacion que ha ingresado no existe]")
     except:
         print("[ERROR DE CONEXIÓN CON EL API]")
-    listar(listado_Pokemones)
+    listar_de_a_diez(listado_Pokemones)
 
-def listarGeneracion():
+def listarGeneracion() -> None:
+    """Imprime los datos de los pokemons de una genracion"""
     while True:
 
         print("***** LISTAR POR GENERACION *******")
@@ -225,4 +255,100 @@ def listarGeneracion():
         else:
             break
     
+def buscarForma(url_forma:str) -> list[str]:
+    """Retorna la lista de pokemons según la lista ingresada"""
+    listado_Pokemones = []
+    try:
+        
+        peticion1 = requests.get(url_forma)
+        if peticion1.ok:
 
+            respuesta1 = json.loads(peticion1.content)
+
+            for forma_poke in respuesta1["pokemon_species"]:
+
+                nombre_pokemon = forma_poke["name"]
+                url_poke = URLPOKEMON + nombre_pokemon + "/"
+                try: 
+                    res_pok = requests.get(url_poke)
+                    if res_pok.ok:
+                        respuestaPokemon = json.loads(res_pok.content)
+                        habilidadesList = []
+
+                        for pokemon in respuestaPokemon["abilities"]:
+                            habilidadesList.append(pokemon["ability"]["name"])
+                        habilidades = "\n".join(habilidadesList)
+                        listado_Pokemones.append(
+                            [
+                                respuestaPokemon["name"],
+                                habilidades,
+                                respuestaPokemon["sprites"]["front_default"],
+                            ]
+                        )
+                    else:
+                        print("[ERROR EN LA BÚSQUEDA DEL POKEMON]")
+                except:
+                    print("[ERROR DE CONEXIÓN CON EL API]")
+        else:
+            print("[ERROR EN LA BUSQUEDA DE LA FORMA")
+    except:
+        print("[ERROR DE CONEXIÓN CON EL API]")
+    return listado_Pokemones
+
+
+def validarForma(forma:str) -> str:
+    """Valida si la forma ingresada por el pokemon"""
+    try:
+        
+        peticion1 = requests.get(URLFORMAS)
+        if peticion1.ok:
+
+            respuesta1 = json.loads(peticion1.content)
+            for form in respuesta1["results"]:
+                if form["name"] == forma:
+                    url_form = form["url"]
+                    return url_form
+
+                else:
+                    print("[La forma ingresada no existe]")
+                    return None
+
+        else:
+            print("[ERROR EN LA BUSQUEDA DE LA FORMA")
+    except:
+        print("[ERROR DE CONEXIÓN CON EL API]")
+
+
+def mostrarForma(url_formas:str) -> None:
+    """Imprime las 14 formas de pokemons que existen"""
+    try:
+
+        peticion1 = requests.get(url_formas)
+        if peticion1.ok:
+
+            respuesta1 = json.loads(peticion1.content)
+            print("Estas son las 14 formas de pokemos que existen:")
+            for forma in respuesta1["results"]:
+                print(forma["name"])
+
+        else:
+            print("[La forma que ha ingresado no existe]")
+    except:
+        print("[ERROR DE CONEXIÓN CON EL API]")
+
+
+def listarForma():
+    """Imprime la los datos de los pokemons según su forma"""
+    print("********** LISTADO POR FORMAS ********")
+    creacionMenu(["Ingrese la forma", "Ver opciones de formas", "Cancelar"])
+    op = validarRangoInt(1, 3, "Elija una opción: ")
+    if op == 1:
+        forma = validarLeerStrings(" -Ingrese la forma a buscar: ")
+        funcionlimpiar()
+        url_forma = validarForma(forma)
+        if url_forma is not None:  
+            listar_de_a_diez(buscarForma(url_forma))
+        else:
+            print("[NO HAY POKEMONES CON ESTA FORMA :c]")
+    elif op == 2:
+        mostrarForma(URLFORMAS)
