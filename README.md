@@ -63,6 +63,14 @@ Consideraciones:
 ### Opción 1: Listar pokemons por generación
 ### Opción 2: Listar pokemons por forma
 ### Opción 3: Listar pokemons por habilidad
+![](./Assets/2.3.ListadoHabilidades.png)
+Opciones del menú de habilidades:
+-Se puede ingresar una habilidad
+![](./Assets/2.3.ListadoHabilidades2.png)
+-Se puede listar e ingresar la opcion a buscar (Ademas de ello está paginado para VER MAS o REGRESAR A LAS YA VISTAS)
+![](./Assets/2.3.ListadoHabilidades4.png)
+-Listado 
+![](./Assets/2.3.ListadoHabilidades3.png)
 ### Opción 4: Listar pokemons por habitat
 ### Opción 5: Listar pokemons por tipo
 
@@ -71,6 +79,6 @@ Consideraciones:
 ## Autores
 ***
 
-✅Gefferson
-✅Jaqueline
-✅Raisa
+✅Gefferson Casasola
+✅Jaqueline Ramos
+✅Raisa Orellana
