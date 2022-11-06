@@ -4,7 +4,7 @@ from Pokemon import *
 from tabulate import tabulate
 from urllib.parse import parse_qsl
 
-
+URL_HABITS = 'https://pokeapi.co/api/v2/pokemon-habitat/'
 URLHABILIDADES = "https://pokeapi.co/api/v2/ability/"
 
 def listadoPorHabilidad():
@@ -152,16 +152,22 @@ def get_data_endpoint(url: str, key: str):
     data = resp.json()
     results = data[key]
     return results
-url_pokemon_habit = 'https://pokeapi.co/api/v2/pokemon-habitat/'
+
 def get_opciones_habits():
-    results = get_data_endpoint(url_pokemon_habit,'results')
+    results = get_data_endpoint(URL_HABITS,'results')
     habits =[]
-    for result in results:
+    for indice,result in enumerate(results):
+        print("(",indice+1,")", result["name"])
         habits.append(result['name'])
     return habits
+
 def get_pokemones_por_habita():
     opcion = input("Ingrese una opción en números: ")
-    endpoint = url_pokemon_habit+opcion
+    endpoint = URL_HABITS+opcion
     result = get_data_endpoint(endpoint,"pokemon_species")
     return result
         
+def listadoPorHabitat():
+    get_opciones_habits()
+
+get_opciones_habits()
