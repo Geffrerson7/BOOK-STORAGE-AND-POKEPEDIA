@@ -164,7 +164,7 @@ def crearPokemon(url):
 def generadorPokemones(listado, index):
     for poke in listado:
         habilidades = "\n".join(poke.habilidades)
-        lista = [poke.name,habilidades, poke.urlImg]
+        lista = [poke.name, habilidades, poke.urlImg]
         yield lista, index
         index += 1
 
@@ -190,7 +190,7 @@ def listar_de_a_diez(listado):  # listar_10_pokes
             else:
                 return
     # funcionlimpiar()
-    if(data):
+    if data:
         print(tabulate(data, headers=head, tablefmt="fancy_grid"))
     print("[ESOS FUERON TODOS LOS RESULTADOS]")
 
@@ -206,8 +206,7 @@ def buscarGeneracion(generacion: int) -> None:
             respuesta1 = json.loads(peticion1.content)
             for gen in respuesta1["pokemon_species"]:
 
-                nombre_pokemon = gen["name"]
-                url_poke = URLPOKEMON + nombre_pokemon + "/"
+                url_poke = "".join(gen["url"].split("-species"))
                 pokemonCreado = crearPokemon(url_poke)
                 if pokemonCreado is not None:
                     listado_Pokemones.append(pokemonCreado)
@@ -259,34 +258,9 @@ def listarGeneracion() -> None:
             break
 
 
-def buscarForma(url_forma: str) -> list[str]:
-    """Retorna la lista de pokemons según la lista ingresada"""
-    listado_Pokemones = []
-    try:
-        peticion1 = requests.get(url_forma)
-        if peticion1.ok:
-            respuesta1 = json.loads(peticion1.content)
-            for forma_poke in respuesta1["pokemon_species"]:
-                url_especies = forma_poke["url"]
-                url_poke = "".join(url_especies.split("-species"))
-                try:
-                    pokemonCreado = crearPokemon(url_poke)
-                    if pokemonCreado is not None:
-                        listado_Pokemones.append(pokemonCreado)
-                    else:
-                        print("[ERROR EN LA CREACIÓN DEL POKEMON]")
-                        break
-                except:
-                    print("[ERROR DE CONEXIÓN CON EL API]")
-        else:
-            print("[ERROR EN LA BUSQUEDA DE LA FORMA")
-    except:
-        print("[ERROR DE CONEXIÓN CON EL API]")
-    return listado_Pokemones
-
-
-def validarForma(forma: str) -> str:
+def buscarForma(forma: str) -> list[str]:
     """Valida si la forma ingresada por el pokemon"""
+    listado_Pokemones = []
     try:
 
         peticion1 = requests.get(URLFORMAS)
@@ -296,12 +270,32 @@ def validarForma(forma: str) -> str:
             for form in respuesta1["results"]:
 
                 if form["name"] == forma:
-                    url_form = form["url"]
-                    return url_form
+
+                    url_forma = form["url"]
+                    try:
+                        peticion2 = requests.get(url_forma)
+                        if peticion2.ok:
+                            respuesta2 = json.loads(peticion2.content)
+                            for forma_poke in respuesta2["pokemon_species"]:
+                                url_especies = forma_poke["url"]
+                                url_poke = "".join(url_especies.split("-species"))
+                                try:
+                                    pokemonCreado = crearPokemon(url_poke)
+                                    if pokemonCreado is not None:
+                                        listado_Pokemones.append(pokemonCreado)
+                                    else:
+                                        print("[ERROR EN LA CREACIÓN DEL POKEMON]")
+                                        break
+                                except:
+                                    print("[ERROR DE CONEXIÓN CON EL API]")
+                        else:
+                            print("[ERROR EN LA BUSQUEDA DE LA FORMA")
+                    except:
+                        print("[ERROR DE CONEXIÓN CON EL API]")
+                    return listado_Pokemones
 
                 else:
-                    print("[La forma ingresada no existe]")
-                    return None
+                    print("[Buscando forma]")
 
         else:
             print("[ERROR EN LA BUSQUEDA DE LA FORMA")
@@ -316,6 +310,8 @@ def mostrarForma(url_formas: str) -> None:
         if peticion1.ok:
             respuesta1 = json.loads(peticion1.content)
             creacionMenu(listarOpciones(respuesta1["results"]), 1)
+            op = validarLeerStrings("Escriba la forma a buscar: ")
+            listar_de_a_diez(buscarForma(op))
         else:
             print("[La forma que ha ingresado no existe]")
     except:
@@ -330,17 +326,14 @@ def listarForma():
     if op == 1:
         forma = validarLeerStrings(" -Ingrese la forma a buscar: ")
         funcionlimpiar()
-        url_forma = validarForma(forma)
-        if url_forma is not None:
-            listar_de_a_diez(buscarForma(url_forma))
-        else:
-            print("[NO HAY POKEMONES CON ESTA FORMA :c]")
+
+        listar_de_a_diez(buscarForma(forma))
     elif op == 2:
         mostrarForma(URLFORMAS)
 
 
 def get_data_endpoint(url: str, key: str):
-    results=[]
+    results = []
     try:
         resp = requests.get(url)
         if resp.ok:
@@ -349,6 +342,7 @@ def get_data_endpoint(url: str, key: str):
     except:
         print("[ERROR DE CONEXIÓN]")
     return results
+
 
 def get_opciones_habits(url: str):
     results = get_data_endpoint(url, "results")
@@ -396,18 +390,20 @@ def listadoPorHabitat():
     print("********** LISTADO POR HABITAT ********")
     try:
         peticion1 = requests.get(URL_HABITS)
-        listado_Pokemones=[]
+        listado_Pokemones = []
         if peticion1.ok:
             respuesta1 = json.loads(peticion1.content)
-            habitats=listarOpciones(respuesta1["results"])
+            habitats = listarOpciones(respuesta1["results"])
             creacionMenu(habitats, 1)
-            num_habitat = validarRangoInt(1, len(habitats), "Ingrese una opción en números: ")
-            endpoint = URL_HABITS + str(num_habitat)#1
+            num_habitat = validarRangoInt(
+                1, len(habitats), "Ingrese una opción en números: "
+            )
+            endpoint = URL_HABITS + str(num_habitat)  # 1
             pokemons = get_data_endpoint(endpoint, "pokemon_species")
             if pokemons:
                 for poke in pokemons:
-                    url="".join(poke["url"].split("-species"))
-                    pokemonCreado=crearPokemon(url)
+                    url = "".join(poke["url"].split("-species"))
+                    pokemonCreado = crearPokemon(url)
                     if pokemonCreado is not None:
                         listado_Pokemones.append(pokemonCreado)
                     else:
@@ -420,7 +416,7 @@ def listadoPorHabitat():
             print("[Sucedio un error en la petición]")
     except:
         print("[ERROR DE CONEXIÓN CON EL API]")
-    
+
 
 def listadoPorTipo():
     print("********** LISTADO POR TIPO ********")
