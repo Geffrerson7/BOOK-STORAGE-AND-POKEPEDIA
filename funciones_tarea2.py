@@ -427,7 +427,6 @@ def listadoPorTipo():
         if peticion1.ok:
             respuesta1 = peticion1.json()
             tipos=listarOpciones(respuesta1["results"])
-            print(tipos,'jknfvdvfdjkn')
             creacionMenu(tipos, 1)
             num_habitat = validarRangoInt(1, len(tipos), "Ingrese una opción en números: ")
             endpoint = URL_TYPE + str(num_habitat)#1
