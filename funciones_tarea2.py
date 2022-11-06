@@ -146,7 +146,11 @@ def listar(lista_pokemones):
         data.append([poke.name, poke.urlImg, str(poke.habilidades)])
     # # display table
     print(tabulate(data, headers=head, tablefmt="grid"))
-    
+
+def listar_pokemons_habitats(lista_pokemones):
+    head = ["Nombre Pokemon", "Url Image", "Habitats"]
+    print(tabulate(lista_pokemones, headers=head, tablefmt="fancy_grid"))
+
 def get_data_endpoint(url: str, key: str):
     resp = requests.get(url)
     data = resp.json()
@@ -162,16 +166,19 @@ def get_opciones_habits():
     return habits
 
 def print_pokemons_habits(pokemons):
+    lista_pokemons = []
     for pokemon in pokemons:
         url_pokemon = pokemon['url']
         habitat = get_data_endpoint(url_pokemon,'habitat')['name']
         other_url_pokemon = ''.join(pokemon['url'].split('-species'))
         url_img = get_data_endpoint(other_url_pokemon, 'sprites')['front_default']
-        print(
-            pokemon["name"],
+        lista_pokemons.append(
+           [ pokemon["name"],
             habitat,
-            url_img,
+            url_img,]
         )
+    
+    listar_pokemons_habitats(lista_pokemons)
 
 def listadoPorHabitat():
     habitats= get_opciones_habits()
