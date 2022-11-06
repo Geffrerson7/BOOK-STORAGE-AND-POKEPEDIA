@@ -32,6 +32,11 @@
 ## Tarea1: BIBLIOTECA
 ***
 ### Opción 1: Leer archivo de disco duro
+Consideraciones:
+-El archivo a leer es .txt o .csv
+![](./Assets/1.1.Leer-archivo-txt-de-disco-duro.png)
+![](./Assets/1.1.Leer-archivo-csv-de-disco-duro.png)
+![](./Assets/)
 ### Opción 2: Listar libros
 ![](./Assets/1.2.Listar-libros.png)
 ### Opción 3: Agregar libro
@@ -40,12 +45,22 @@ Consideraciones:
 - El número de autores debe ser mayor a 0
 ![](./Assets/1.3.Agregar-Libro.png)
 ### Opción 4: Eliminar libro
+Consideraciones: 
+- Se utiliza el código ISBN para identificar el libro a eliminar.
+![](./Assets/1.4.Eliminar-libro.png)
 ### Opción 5: Buscar libro por ISBN o por título
 ![](./Assets/1.5.Buscar-libro-por-isbn.png)
 ![](./Assets/1.5.Buscar-libro-por-titulo.png)
 ### Opción 6: Ordenar libros por título
 ![](./Assets/1.6.OrdenarLibrosPorTitulo.png)
 ### Opción 7: Buscar libros por autor editorial o género
+Consideraciones: 
+- Se busca libros por nombre o nombre completo de autor, editorial o genero que se ingrese.
+![](./Assets/1.7.Buscar-libro-por-autor-2)
+![](./Assets/1.7.Buscar-libro-por-autor)
+![](./Assets/1.7.Buscar-libro-por-editorial)
+![](./Assets/1.7.Buscar-libro-por-genero)
+
 ### Opción 8: Buscar libros por número de autores
 ![](./Assets/1.5.Buscar-libro-por-titulo.png)
 ### Opción 9: Editar o actualizar datos de un libro
@@ -56,12 +71,32 @@ Consideraciones:
 - En editar autores de la 2 opción, se brinda le da las alternativas de agregar un nuevo autor, eliminar o modificar
 ![](./Assets/1.9.EditarLibro2.png)
 ### Opción 10: Guardar libros en archivo de disco duro
-
+Consideraciones: 
+- Se puede elegir guardar los libros en un archivo .txt o .csv.
+![](./Assets/1.10.Guardar-libros-en-disco-duro-en-csv.png)
+![](./Assets/1.10.Guardar-libros-en-disco-duro-en-txt.png)
 ***
 ## Tarea2: POKEAPI
 ***
+<br>-Se muestra un menú para elegir si se quiere listar por generaciones, forma, habilidad, habitat y tipo.<br>
+![](./Assets/Menu-pokepedia.png)
+NOTA:
+<br>En cualquier opcion se imprimen los 10 primeros pokemones y despues se consulta si desea continuar buscando más pokemones.<br>
+![](./Assets/Listado-por generacion.png)
+
 ### Opción 1: Listar pokemons por generación
+<br>-Primero se muestra un menú con las 8 generaciones a elegir.<br>
+<br>
+-Al ingresar el número de la generacion se imprime el nombre , las habilidades y el URL de la imganen del pokemon<br>
+![](./Assets/Listado-por generacion-2.png)
+
 ### Opción 2: Listar pokemons por forma
+<br>-Primero se muestra el menú para listar por forma<br>
+![](./Assets/2.2.-listado-por-forma.png)
+<br>Si se escoge la primera opcion se puede escribir directamente la forma a listar.<br>
+![](./Assets/2.2.-listado-por-forma-opcion-1.png)
+<br>Si se escoge la segunda te muestra las 14 formas que existen y despues ya puedes escirbir la forma que quieras.<br>
+![](./Assets/2.2.-listado-por-forma-opcion-2.png)
 ### Opción 3: Listar pokemons por habilidad
 <br> Opciones del menú de habilidades:
 -Se puede ingresar una habilidad <br>
@@ -83,3 +118,4 @@ Consideraciones:
 ✅Gefferson Casasola
 ✅Jaqueline Ramos
 ✅Raisa Orellana
+

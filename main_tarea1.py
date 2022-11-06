@@ -51,7 +51,6 @@ def menu():
             print("******* BUSCAR LIBRO POR ISBN O POR TITULO ********")
             Buscar_libro_por_ISBN_o_título(lista_libros)
             regresarmenu()
-
         elif opcion == 6:
             funcionlimpiar()
             print("*** LIBROS ORDENADOS POR TÍTULO ****")

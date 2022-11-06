@@ -9,6 +9,7 @@ from funciones_utilidades import *
 
 
 def CargarArchivo(objetos_libros) -> list:
+    """Carga un archivo .csv o .txt del disco duro"""
     try:
         direccion = validarLeerStrings("Escriba la dirección del archivo .txt o .csv: ")
         with open(direccion, "r", encoding="utf-8") as csv_file:
@@ -224,17 +225,20 @@ def listar(libros_data):
 
 
 def eliminarLibro(isbn: str, lista_libros: list[Libro]) -> None:
+    """Funcion que elimina un libro almacenado en una lista cuyo parametro es el codigo isbn del libro"""
     DEL = 0
     for libro in lista_libros:
         if libro.get_ISBN() == isbn:
             lista_libros.pop(lista_libros.index(libro))
-            print("El libro ha sido eliminado")
             DEL += 1
-    if DEL == 0:
+    if DEL == 1:
+        print("El libro ha sido eliminado")
+    else:
         print("ERROR: El código isbn no está en la lista")
 
 
 def Buscar_libro_por_autor_editorial_o_título(lista_libros):
+    """Funcion que lista los libros del autor, editorial o título a buscar"""
     creacionMenu(["Autor", "Editorial", "Genero", "Salir al Menú"])
     op = validarRangoInt(1, 4, "Ingrese la opción de búsqueda: ")
 
@@ -266,6 +270,7 @@ def Buscar_libro_por_autor_editorial_o_título(lista_libros):
 
 
 def guardarlibros(Lista: list) -> None:
+    """Función que guarda los libros de una lista en un archivo .csv o .txt"""
     creacionMenu([".txt", ".csv", "Salir al Menú"])
     op = validarRangoInt(1, 3, "Ingrese la opción de búsqueda: ")
     if op == 1:
@@ -310,6 +315,7 @@ def guardarlibros(Lista: list) -> None:
 
 
 def Buscar_en_libros_2(atributoBuscar: str, libros: list[Libro], palabraBuscar: str):
+    """Funcion que retorna un lista de libros segun el autor, editorial o genero ingresado"""
     resultados = []
     for libro in libros:
         srch_result = -1
@@ -340,4 +346,3 @@ def Buscar_por_numero_autores(libros: list[Libro]):
         if num_autores_libro == num_autores_user:
             result_search.append(libro)
     listar(result_search)
-
