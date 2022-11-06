@@ -49,9 +49,9 @@ Consideraciones:
 ### Opción 8: Buscar libros por número de autores
 ![](./Assets/1.5.Buscar-libro-por-titulo.png)
 ### Opción 9: Editar o actualizar datos de un libro
-Consideraciones:
+Consideraciones: 
 - Se va a editar el libro según el ISBN ingresado
-- Se brindan 2 opciones de edición
+- Se brindan 2 opciones de edición <br>
 ![](./Assets/1.9.EditarLibro1.png)
 - En editar autores de la 2 opción, se brinda le da las alternativas de agregar un nuevo autor, eliminar o modificar
 ![](./Assets/1.9.EditarLibro2.png)
@@ -63,13 +63,14 @@ Consideraciones:
 ### Opción 1: Listar pokemons por generación
 ### Opción 2: Listar pokemons por forma
 ### Opción 3: Listar pokemons por habilidad
-![](./Assets/2.3.ListadoHabilidades.png)
-Opciones del menú de habilidades:
--Se puede ingresar una habilidad
+<br> Opciones del menú de habilidades:
+-Se puede ingresar una habilidad <br>
 ![](./Assets/2.3.ListadoHabilidades2.png)
--Se puede listar e ingresar la opcion a buscar (Ademas de ello está paginado para VER MAS o REGRESAR A LAS YA VISTAS)
-![](./Assets/2.3.ListadoHabilidades4.png)
--Listado 
+<br>
+-Se puede listar e ingresar la opcion a buscar (Ademas de ello está paginado para VER MAS o REGRESAR A LAS YA VISTAS) <br>
+![](./Assets/2.3.ListadoHabilidades4..png)
+<br>
+-Listado <br>
 ![](./Assets/2.3.ListadoHabilidades3.png)
 ### Opción 4: Listar pokemons por habitat
 ### Opción 5: Listar pokemons por tipo
