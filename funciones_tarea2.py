@@ -161,13 +161,26 @@ def get_opciones_habits():
         habits.append(result['name'])
     return habits
 
-def get_pokemones_por_habita():
-    opcion = input("Ingrese una opción en números: ")
-    endpoint = URL_HABITS+opcion
-    result = get_data_endpoint(endpoint,"pokemon_species")
-    return result
-        
-def listadoPorHabitat():
-    get_opciones_habits()
+def print_pokemons_habits(pokemons):
+    for pokemon in pokemons:
+        url_pokemon = pokemon['url']
+        habitat = get_data_endpoint(url_pokemon,'habitat')['name']
+        other_url_pokemon = ''.join(pokemon['url'].split('-species'))
+        url_img = get_data_endpoint(other_url_pokemon, 'sprites')['front_default']
+        print(
+            pokemon["name"],
+            habitat,
+            url_img,
+        )
 
-get_opciones_habits()
+def listadoPorHabitat():
+    habitats= get_opciones_habits()
+    habitat = int(input("Ingrese una opción en números: "))
+    endpoint = URL_HABITS+str(habitat)
+    pokemons = get_data_endpoint(endpoint,"pokemon_species")
+    print_pokemons_habits(pokemons)
+
+def validar_input_habit():
+    print('km')   
+
+listadoPorHabitat()

@@ -27,9 +27,14 @@ def menu():
         elif opcion == 4:
             pass
         elif opcion == 5:
-            
+            funcionlimpiar()
+            listadoPorHabitat()
+            regresarmenu()
             pass
         elif opcion == 6:
+            funcionlimpiar()
+            listadoPorHabilidad()
+            regresarmenu()
             break
 
 
