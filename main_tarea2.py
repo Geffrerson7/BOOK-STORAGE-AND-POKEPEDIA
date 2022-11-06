@@ -21,7 +21,9 @@ def menu():
             listarGeneracion()
             regresarmenu()
         elif opcion == 2:
-            pass
+            funcionlimpiar()
+            listarForma
+            regresarmenu()
         elif opcion == 3:
             funcionlimpiar()
             listadoPorHabilidad()
