@@ -5,7 +5,7 @@
 **Table of Contents**
 
 1. [Tarea 1: BIBLIOTECA](#tarea1-biblioteca)  
-    - [Leer archivo de disco duro (.txt o csv)](#opción-1-leer-archivo-de-discoduro)  
+    - [Leer archivo de disco duro (.txt o csv)](#opción-1-leer-archivo-de-disco-duro)  
     - [Listar libros](#opción-2-listar-libros)  
     - [Agregar libro](#opción-3-agregar-libro)  
     - [Eliminar libro](#opción-4-eliminar-libro)  
