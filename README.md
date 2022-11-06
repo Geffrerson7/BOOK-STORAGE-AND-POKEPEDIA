@@ -5,7 +5,7 @@
 **Table of Contents**
 
 1. [Tarea 1: BIBLIOTECA](#tarea1-biblioteca)  
-    - [Leer archivo de disco duro (.txt o csv)](#opción-1-leer-archivo)  
+    - [Leer archivo de disco duro (.txt o csv)](#opción-1-leer-archivo-de-discoduro)  
     - [Listar libros](#opción-2-listar-libros)  
     - [Agregar libro](#opción-3-agregar-libro)  
     - [Eliminar libro](#opción-4-eliminar-libro)  
@@ -22,10 +22,11 @@
     - [Listar pokemons por habitat](#opción-4-listar-pokemons-por-habitat)       
     - [Listar pokemons por tipo](#opción-5-listar-pokemons-por-tipo) 
 3. [Módulos a instalar](#módulos-a-instalar)  
+4. [Autores](#autores)  
 ***
 ## Tarea1: BIBLIOTECA
 ***
-### Opción 1: Leer archivo de disco duro .txt o csv
+### Opción 1: Leer archivo de disco duro
 ### Opción 2: Listar libros
 ![](./Assets/1.2.Listar-libros.png)
 ### Opción 3: Agregar libro
@@ -52,3 +53,12 @@
 ***
 ## Módulos a instalar
 ***
+1. pip install tabulate
+2. python -m pip show requests
+***
+## Autores
+***
+
+✅Gefferson
+✅Jaqueline
+✅Raisa
