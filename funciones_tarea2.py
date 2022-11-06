@@ -1,11 +1,14 @@
 from funciones_utilidades import *
-import requests
+import requests, json
 from Pokemon import *
 from tabulate import tabulate
 from urllib.parse import parse_qsl
 
 
 URLHABILIDADES = "https://pokeapi.co/api/v2/ability/"
+URLGENERACIONES = "https://pokeapi.co/api/v2/generation/"
+URLFORMAS = "https://pokeapi.co/api/v2/pokemon-shape/"
+URLPOKEMON = "https://pokeapi.co/api/v2/pokemon/"
 
 def listadoPorHabilidad():
     print("********** LISTADO POR HABILIDADES ********")
@@ -146,5 +149,80 @@ def listar(lista_pokemones):
         data.append([poke.name, poke.urlImg, str(poke.habilidades)])
     # # display table
     print(tabulate(data, headers=head, tablefmt="grid"))
+
+def buscarGeneracion(generacion):
+
+    listado_Pokemones = []
+    try:
+        url_gen = URLGENERACIONES + str(generacion) + "/"
+        peticion1 = requests.get(url_gen)
+        if peticion1.ok:
+
+            respuesta1 = json.loads(peticion1.content)
+            for gen in respuesta1["pokemon_species"]:
+
+                nombre_pokemon = gen["name"]
+                url_poke = URLPOKEMON + nombre_pokemon + "/"
+
+                res_pok = requests.get(url_poke)
+                if res_pok.ok:
+                    respuestaPokemon = json.loads(res_pok.content)
+                    habilidadesList = []
+
+                    for pokemon in respuestaPokemon["abilities"]:
+                        habilidadesList.append(pokemon["ability"]["name"])
+                    habilidades = "\n".join(habilidadesList)
+                    listado_Pokemones.append(
+                        [
+                            respuestaPokemon["name"],
+                            habilidades,
+                            respuestaPokemon["sprites"]["front_default"],
+                        ]
+                    )
+                else:
+                    print("[ERROR EN LA CREACIÓN DEL POKEMON]")
+
+        else:
+            print("[La generacion que ha ingresado no existe]")
+    except:
+        print("[ERROR DE CONEXIÓN CON EL API]")
+    listar(listado_Pokemones)
+
+def listarGeneracion():
+    while True:
+
+        print("***** LISTAR POR GENERACION *******")
+        creacionMenu(
+            [
+                "Listar la Generación 1",
+                "Listar la Generación 2",
+                "Listar la Generación 3",
+                "Listar la Generación 4",
+                "Listar la Generación 5",
+                "Listar la Generación 6",
+                "Listar la Generación 7",
+                "Listar la Generación 8",
+                "Salir al Menú",
+            ]
+        )
+        gen = validarRangoInt(1, 9, "Ingrese el numero de generacion a listar: ")
+        if gen == 1:
+            buscarGeneracion(1)
+        elif gen == 2:
+            buscarGeneracion(2)
+        elif gen == 3:
+            buscarGeneracion(3)
+        elif gen == 4:
+            buscarGeneracion(4)
+        elif gen == 5:
+            buscarGeneracion(5)
+        elif gen == 6:
+            buscarGeneracion(6)
+        elif gen == 7:
+            buscarGeneracion(7)
+        elif gen == 8:
+            buscarGeneracion(8)
+        else:
+            break
     
 
