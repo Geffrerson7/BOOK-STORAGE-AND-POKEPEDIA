@@ -7,16 +7,19 @@ def get_data_endpoint(url: str, key: str):
     data = resp.json()
     results = data[key]
     return results
-
-def leer_opciones_habits():
-    url_pokemon_habit = 'https://pokeapi.co/api/v2/pokemon-habitat/'
+url_pokemon_habit = 'https://pokeapi.co/api/v2/pokemon-habitat/'
+def get_opciones_habits():
     results = get_data_endpoint(url_pokemon_habit,'results')
     habits =[]
     for result in results:
         habits.append(result['name'])
     return habits
+def get_pokemones_por_habita():
+    opcion = input("Ingrese una opción en números: ")
+    endpoint = url_pokemon_habit+opcion
+    result = get_data_endpoint(endpoint,"pokemon_species")
+    return result
+        
 
-print(leer_opciones_habits())
+print(get_pokemones_por_habita())
 
-def listar_pokemones_por_habits():
-     results = leer_opciones_habits()
