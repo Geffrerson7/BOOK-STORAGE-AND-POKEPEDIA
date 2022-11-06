@@ -85,13 +85,13 @@ Consideraciones:
 ![](./Assets/Menu-pokepedia.png)
 NOTA:
 <br>En cualquier opcion se imprimen los 10 primeros pokemones y despues se consulta si desea continuar buscando más pokemones.<br>
-![](./Assets/Listado-por generacion.png)
+![](./Assets/Listado-por-generacion.png)
 
 ### Opción 1: Listar pokemons por generación
 <br>-Primero se muestra un menú con las 8 generaciones a elegir.<br>
 <br>
 -Al ingresar el número de la generacion se imprime el nombre , las habilidades y el URL de la imganen del pokemon<br>
-![](./Assets/Listado-por generacion-2.png)
+![](./Assets/Listado-por-generacion-2.png)
 
 ### Opción 2: Listar pokemons por forma
 <br>-Primero se muestra el menú para listar por forma<br>
