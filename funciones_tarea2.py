@@ -309,10 +309,14 @@ def mostrarForma(url_formas: str) -> None:
         peticion1 = requests.get(url_formas)
         if peticion1.ok:
             respuesta1 = json.loads(peticion1.content)
-            creacionMenu(listarOpciones(respuesta1["results"]), 1)
+            nombres=listarOpciones(respuesta1["results"])
+            creacionMenu(nombres, 1)
             op = validarLeerStrings("Escriba la forma a buscar: ")
             if op.isnumeric():
                 print("[No ingrese un número]")
+                return
+            elif op not in nombres:
+                print("[No existe la forama ingresada]")
                 return
             listar_de_a_diez(buscarForma(op))
         else:
