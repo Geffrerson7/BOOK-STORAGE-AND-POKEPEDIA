@@ -59,10 +59,10 @@ Caso título:
 ### Opción 7: Buscar libros por autor editorial o género
 Consideraciones: 
 - Se busca libros por nombre o nombre completo de autor, editorial o genero que se ingrese.
-![](./Assets/1.7.Buscar-libro-por-autor-2)
-![](./Assets/1.7.Buscar-libro-por-autor)
-![](./Assets/1.7.Buscar-libro-por-editorial)
-![](./Assets/1.7.Buscar-libro-por-genero)
+![](./Assets/1.7.Buscar-libro-por-autor-2.png)
+![](./Assets/1.7.Buscar-libro-por-autor.png)
+![](./Assets/1.7.Buscar-libro-por-editorial.png)
+![](./Assets/1.7.Buscar-libro-por-genero.png)
 
 ### Opción 8: Buscar libros por número de autores
 ![](./Assets/1.5.Buscar-libro-por-titulo.png)
@@ -83,7 +83,7 @@ Consideraciones:
 ***
 <br>-Se muestra un menú para elegir si se quiere listar por generaciones, forma, habilidad, habitat y tipo.<br>
 ![](./Assets/Menu-pokepedia.png)
-NOTA:
+<br>NOTA:<br>
 <br>En cualquier opcion se imprimen los 10 primeros pokemones y despues se consulta si desea continuar buscando más pokemones.<br>
 ![](./Assets/Listado-por-generacion.png)
 
