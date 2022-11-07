@@ -267,35 +267,35 @@ def buscarForma(forma: str) -> list[str]:
         if peticion1.ok:
 
             respuesta1 = json.loads(peticion1.content)
-            for form in respuesta1["results"]:
-
-                if form["name"] == forma:
-
-                    url_forma = form["url"]
-                    try:
-                        peticion2 = requests.get(url_forma)
-                        if peticion2.ok:
-                            respuesta2 = json.loads(peticion2.content)
-                            for forma_poke in respuesta2["pokemon_species"]:
-                                url_especies = forma_poke["url"]
-                                url_poke = "".join(url_especies.split("-species"))
-                                try:
-                                    pokemonCreado = crearPokemon(url_poke)
-                                    if pokemonCreado is not None:
-                                        listado_Pokemones.append(pokemonCreado)
-                                    else:
-                                        print("[ERROR EN LA CREACIÓN DEL POKEMON]")
-                                        break
-                                except:
-                                    print("[ERROR DE CONEXIÓN CON EL API]")
-                        else:
-                            print("[ERROR EN LA BUSQUEDA DE LA FORMA")
-                    except:
-                        print("[ERROR DE CONEXIÓN CON EL API]")
-                    return listado_Pokemones
-
-                else:
-                    print("[Buscando forma]")
+            formas=listarOpciones(respuesta1["results"])
+            if forma in formas:
+                for form in respuesta1["results"]:
+                    
+                        url_forma = form["url"]
+                        try:
+                            peticion2 = requests.get(url_forma)
+                            if peticion2.ok:
+                                respuesta2 = json.loads(peticion2.content)
+                                for forma_poke in respuesta2["pokemon_species"]:
+                                    url_especies = forma_poke["url"]
+                                    url_poke = "".join(url_especies.split("-species"))
+                                    try:
+                                        pokemonCreado = crearPokemon(url_poke)
+                                        if pokemonCreado is not None:
+                                            listado_Pokemones.append(pokemonCreado)
+                                        else:
+                                            print("[ERROR EN LA CREACIÓN DEL POKEMON]")
+                                            break
+                                    except:
+                                        print("[ERROR DE CONEXIÓN CON EL API]")
+                            else:
+                                print("[ERROR EN LA BUSQUEDA DE LA FORMA")
+                        except:
+                            print("[ERROR DE CONEXIÓN CON EL API]")
+                        return listado_Pokemones
+            else:
+                print("[Forma no encontrada]")
+                return []
 
         else:
             print("[ERROR EN LA BUSQUEDA DE LA FORMA")
@@ -333,8 +333,9 @@ def listarForma():
     if op == 1:
         forma = validarLeerStrings(" -Ingrese la forma a buscar: ")
         funcionlimpiar()
-
-        listar_de_a_diez(buscarForma(forma))
+        listado=buscarForma(forma)
+        if listado:
+            listar_de_a_diez(listado)
     elif op == 2:
         mostrarForma(URLFORMAS)
 
