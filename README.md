@@ -26,8 +26,21 @@
 ***
 ## Módulos a instalar
 ***
-1. pip install tabulate
-2. python -m pip show requests  
+Crear un entorno virtual:
+
+```sh
+$ python virtualenv venv
+# windows
+$ source venv/Scripts/activate
+# Linux
+$ source venv/bin/activate
+```
+
+Luego instala las librerias:
+
+```sh
+(venv)$ pip install -r requirements.txt
+```
 ***
 ## Tarea1: BIBLIOTECA
 ***
