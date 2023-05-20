@@ -30,7 +30,7 @@ def menu():
             regresarmenu()
         elif opcion == 2:
             funcionlimpiar()
-            print("******* LISTAR LIBRO ********")
+            print("******* LISTAR LIBROS ********")
             listar(lista_libros)
             regresarmenu()
         elif opcion == 3:
@@ -63,32 +63,14 @@ def menu():
             regresarmenu()
         elif opcion == 8:
             funcionlimpiar()
-            print("******* BUSCAR LIBRO POR AUTOR, EDITORIAL O GENERO ********")
+            print("******* BUSCAR LIBRO POR NÚMERO DE AUTORES ********")
             Buscar_por_numero_autores(lista_libros)
             regresarmenu()
         elif opcion == 9:
             funcionlimpiar()
             print("****** EDITAR LIBRO ******")
-            isbn = validarLeerStrings(" -Ingrese ISBN del libro a editar: ")
-            libroActualizar, index = buscarLibro(isbn, lista_libros)
-            if libroActualizar is not None:
-                print("***** OPCIONES DE EDICIÓN ***** ")
-                creacionMenu(
-                    [
-                        "Editar todos los datos del libro",
-                        "Actualizar un dato en especifico",
-                        "Cancelar",
-                    ]
-                )
-                op = validarRangoInt(1, 3, "Ingrese una opción: ")
-                if op == 1:
-                    lista_libros[index] = crearLibro(lista_libros)
-                    print("[*** Libro editado ****]")
-                if op == 2:
-                    libro = actualizarLibro(libroActualizar)
-                    lista_libros[index] = libro
-            else:
-                print("[El ISBN ingresado no está registrado en el sistema]")
+            nueva_lista_libros = editar_libro(lista_libros)
+            lista_libros = nueva_lista_libros
             regresarmenu()
         elif opcion == 10:
             funcionlimpiar()

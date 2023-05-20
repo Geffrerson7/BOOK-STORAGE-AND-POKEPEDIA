@@ -52,7 +52,7 @@ def crearLibro(lista_libros: list[Libro]) -> Libro:
 
 def validarNroAutores() -> int:
     while True:
-        nroAutores = validarLeerInt(" -Nro de autores:")
+        nroAutores = validarLeerInt(" -Número de autores:")
         if nroAutores > 0:
             return nroAutores
         print("[Se debe ingresar al menos 1 autor para el libro]")
@@ -290,7 +290,7 @@ def guardarlibros(Lista: list) -> None:
             )
             txt_file.write(data + "\n")
         txt_file.close()
-        print("La lista de archivos se guardó en lista_libros.txt")
+        print("La lista de archivos se guardó en lista_de_libros.txt")
 
     elif op == 2:
         csv_file = open(".\lista_de_libros.csv", "w", encoding="utf-8")
@@ -309,7 +309,7 @@ def guardarlibros(Lista: list) -> None:
             )
             csv_file.write(data + "\n")
         csv_file.close()
-        print("La lista de archivos se guardó en lista_libros.csv")
+        print("La lista de archivos se guardó en lista_de_libros.csv")
     else:
         print("Adios")
 
@@ -346,3 +346,27 @@ def Buscar_por_numero_autores(libros: list[Libro]):
         if num_autores_libro == num_autores_user:
             result_search.append(libro)
     listar(result_search)
+
+
+def editar_libro(lista_libros):
+    isbn = validarLeerStrings(" -Ingrese ISBN del libro a editar: ")
+    libroActualizar, index = buscarLibro(isbn, lista_libros)
+    if libroActualizar is not None:
+        print("***** OPCIONES DE EDICIÓN ***** ")
+        creacionMenu(
+            [
+                "Editar todos los datos del libro",
+                "Actualizar un dato en especifico",
+                "Cancelar",
+            ]
+        )
+        op = validarRangoInt(1, 3, "Ingrese una opción: ")
+        if op == 1:
+            lista_libros[index] = crearLibro(lista_libros)
+            print("[*** Libro editado ****]")
+        if op == 2:
+            libro = actualizarLibro(libroActualizar)
+            lista_libros[index] = libro
+    else:
+        print("[El ISBN ingresado no está registrado en el sistema]")
+    return lista_libros
