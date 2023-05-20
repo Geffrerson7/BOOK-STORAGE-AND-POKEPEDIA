@@ -260,7 +260,7 @@ def listarGeneracion() -> None:
             break
 
 
-def buscarForma(forma: str) -> list[str]:
+def buscar_forma(forma: str) -> list[str]:
     """Valida si la forma ingresada por el pokemon"""
     listado_Pokemones = []
     try:
@@ -280,10 +280,9 @@ def buscarForma(forma: str) -> list[str]:
                         break
                 except:
                     print("[ERROR DE CONEXIÓN CON LA API]")
-
-            return listado_Pokemones
         else:
-            print("[ERROR EN LA BUSQUEDA DE LA FORMA")
+            print("[ERROR EN LA BUSQUEDA DE LA FORMA]")
+        return listado_Pokemones
     except:
         print("[ERROR DE CONEXIÓN CON LA API]")
 
@@ -299,9 +298,12 @@ def mostrarForma(url_formas: str) -> None:
             op = validarLeerStrings(
                 "Escriba la opción numérica o nombre de la forma a buscar: "
             )
-            listar_de_a_diez(buscarForma(op))
+            if buscar_forma(op):
+                listar_de_a_diez(buscar_forma(op))
+            else:
+                print("[La forma que ha ingresado no existe]")
         else:
-            print("[La forma que ha ingresado no existe]")
+            print("[ERROR EN LA BÚSUQEDA DE LA FORMA]")
     except:
         print("[ERROR DE CONEXIÓN CON EL API]")
 
@@ -314,9 +316,11 @@ def listarForma():
     if op == 1:
         forma = validarLeerStrings(" -Ingrese la forma a buscar [id o nombre]: ")
         funcionlimpiar()
-        listado = buscarForma(forma)
+        listado = buscar_forma(forma)
         if listado:
             listar_de_a_diez(listado)
+        else:
+            print("[La forma que ha ingresado no existe]")
     elif op == 2:
         mostrarForma(URLFORMAS)
 
