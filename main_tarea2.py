@@ -1,6 +1,7 @@
 from funciones_tarea2 import *
 from funciones_utilidades import *
 
+
 def menu():
     while True:
         funcionlimpiar()
@@ -12,7 +13,7 @@ def menu():
                 "Listar pokemons por habilidad",
                 "Listar pokemons por habitat",
                 "Listar pokemons por tipo",
-                "Salir"
+                "Salir",
             ]
         )
         opcion = validarRangoInt(1, 6, "Ingrese la opción: ")
@@ -39,7 +40,6 @@ def menu():
             regresarmenu()
 
         elif opcion == 6:
-
             break
 
 
@@ -50,4 +50,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

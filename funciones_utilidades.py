@@ -7,6 +7,7 @@ def regresarmenu():
 
 
 def funcionlimpiar():
+    """Limpia la pantalla de la consola"""
     # os.name (define el sistema operativo), var es la palabra para limpiar pantalla
     if os.name == "posix":
         var = "clear"
@@ -42,18 +43,22 @@ def validarRangoInt(inicio: int, final: int, mensaje: str) -> int:
             return variable
         print("[El número ingresado no está en el rango indicado]")
 
-def validarRangoConString(inicio: int, final: int,stringAceptados:list[str], mensaje: str) -> int:
+
+def validarRangoConString(
+    inicio: int, final: int, stringAceptados: list[str], mensaje: str
+) -> int:
     """Valida que una opcion ingresada este en el rango indicado, ademas acepta string de una lista"""
     while True:
         variable = input(mensaje)
         if variable.isnumeric():
-            variable=int(variable)
+            variable = int(variable)
             if variable >= inicio and variable <= final:
                 return variable
             print("[El número ingresado no está en el rango indicado]")
         elif variable.lower() in stringAceptados:
             return variable.lower()
         print("[La variable ingresada no es válida]")
+
 
 def leerArrayStrings(mensaje: str, longitud: int) -> list[str]:
     """Recibe un mensaje para el input y la longitud del array a recorrer, solo es para valores de tipo str"""
@@ -71,6 +76,7 @@ def creacionMenu(opciones: list[str], start=1) -> None:
 
 
 def ValidarISBN(ISBN: str):
+    """Valida el código ISBN"""
     result = re.search("^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$", ISBN)
     try:
         return result

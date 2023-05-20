@@ -1,5 +1,13 @@
 class Libro:
-    def __init__(self, id: int, titulo: str, genero: str, ISBN: str, editorial: str, autores: list[str]) -> None:
+    def __init__(
+        self,
+        id: int,
+        titulo: str,
+        genero: str,
+        ISBN: str,
+        editorial: str,
+        autores: list[str],
+    ):
         self.__id = id
         self.__titulo = titulo
         self.__genero = genero
@@ -43,5 +51,5 @@ class Libro:
     def set_autores(self, autores) -> None:
         self.__autores = autores
 
-    def __del__(self) -> None:
+    def __del__(self):
         return None

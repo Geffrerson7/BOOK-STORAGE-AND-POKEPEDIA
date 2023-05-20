@@ -19,7 +19,7 @@ def menu():
                 "Buscar libros por número de autores",
                 "Editar o actualizar datos de un libro",
                 "Guardar libros en archivo",
-                "Salir"
+                "Salir",
             ]
         )
         opcion = validarRangoInt(1, 11, "Ingrese la opción: ")
